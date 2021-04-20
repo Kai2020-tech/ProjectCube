@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navgraph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.goodideas.projectcube.ui.Login.StartFragment"
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.goodideas.projectcube.ui.Login.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/articleListFragment"
+        android:name="com.goodideas.projectcube.ui.ArticleListFragment"
+        android:label="ArticleListFragment" />
+</navigation>

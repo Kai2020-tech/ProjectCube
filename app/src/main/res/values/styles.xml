@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryLightColor</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <!-- text input layout-->
+    <style name="Widget.ProjectCube.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.ProjectCube.TextInputLayout.HintText</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColorHint">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="TextAppearance.ProjectCube.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?android:attr/textColor</item>
+    </style>
+
+    <!--button less attention-->
+    <style name="Base.ProjectCube.Widget.AppCompat.Button" parent="Widget.AppCompat.Button">
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?android:attr/textColor</item>
+    </style>
+
+</resources>

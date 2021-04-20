@@ -1,31 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navgraph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
     app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
         android:name="com.goodideas.projectcube.ui.Login.StartFragment"
+        tools:layout="@layout/fragment_start"
         android:label="StartFragment" >
         <action
             android:id="@+id/action_startFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_startFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
+            app:destination="@id/articleListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.goodideas.projectcube.ui.Login.RegisterFragment"
+        tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_articleListFragment"
-            app:destination="@id/articleListFragment" />
+            app:destination="@id/articleListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/articleListFragment"
+        tools:layout="@layout/fragment_article_list"
         android:name="com.goodideas.projectcube.ui.ArticleListFragment"
         android:label="ArticleListFragment" />
 </navigation>

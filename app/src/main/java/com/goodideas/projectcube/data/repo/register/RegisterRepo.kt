@@ -6,8 +6,11 @@ import com.goodideas.projectcube.data.dto.register.RegisterRes
 import com.goodideas.projectcube.data.network.ApiService
 import com.goodideas.projectcube.data.network.ResResult
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 import timber.log.Timber
 
 class RegisterRepo(private val source: ApiService) : IRegisterRepo {
@@ -22,7 +25,9 @@ class RegisterRepo(private val source: ApiService) : IRegisterRepo {
             try {
                 if (resResult.isSuccessful) {
                     //Do something with response e.g show to the UI.
-                    ResResult.Success(resResult.body()!!)
+                    resResult.body()?.let {
+                        ResResult.Success(it)
+                    } ?: let { ResResult.Fail("error: nobody") }
                 } else {
                     Timber.d("Error: ${resResult.code()}")
                     ResResult.Fail(resResult.errorBody().toString())
@@ -35,6 +40,7 @@ class RegisterRepo(private val source: ApiService) : IRegisterRepo {
                 Timber.d("Ooops: Something else went wrong")
                 ResResult.Fail("${e.message}")
             }
+
         }
     }
 }

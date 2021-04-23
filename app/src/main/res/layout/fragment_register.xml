@@ -88,5 +88,16 @@
             android:id="@+id/register_button"
             android:text="@string/register"/>
 
+        <EditText
+            android:id="@+id/name_edText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintBottom_toTopOf="@+id/email_text"
+            app:layout_constraintStart_toStartOf="@+id/start_guildline" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

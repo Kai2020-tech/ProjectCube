@@ -11,11 +11,11 @@ class RegisterViewModel(
     private val repo: IRegisterRepo
 ) : ViewModel() {
 
-    val loginResult: MutableLiveData<Boolean> = MutableLiveData()
+    val RegisterResult: MutableLiveData<Boolean> = MutableLiveData()
 
     fun register(name: String, email: String, pwd: String, confirmPwd: String) {
         viewModelScope.launch {
-            loginResult.value = repo.register(name, email, pwd, confirmPwd) is ResResult.Success
+            RegisterResult.value = repo.register(name, email, pwd, confirmPwd) is ResResult.Success
         }
     }
 

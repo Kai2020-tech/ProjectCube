@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:networkSecurityConfig="@xml/no_https_config"
         android:name=".CubeApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

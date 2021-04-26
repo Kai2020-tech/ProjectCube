@@ -47,7 +47,7 @@ class RegisterFragment : Fragment() {
 
             } finally {
                 // might move this to other place, for make sure email wouldn't repeat
-                findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
+//                findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
             }
         }
     }

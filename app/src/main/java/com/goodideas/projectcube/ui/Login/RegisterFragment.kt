@@ -12,6 +12,7 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.lang.Exception
 
 
@@ -54,11 +55,19 @@ class RegisterFragment : Fragment() {
     private fun checkFormat() {
         val email = binding.emailText.editText?.text
 
-        val password = binding.passwordText.editText?.text
-        val confirm = binding.reconfirmPasswordText.editText?.text
+//        val password = binding.passwordText.editText?.text
+        val password = "12345678"
+//        val confirm = binding.reconfirmPasswordText.editText?.text
+        val confirm = "12345678"
 
         if (password == confirm && password != null && password.length >= 8) {
-            //TODO post to register
+            Timber.d("vm register")
+            vm.register(
+                name = "33",
+                email.toString(),
+                password.toString(),
+                confirm.toString()
+            )
         } else {
             // TODO ask user to change data
         }

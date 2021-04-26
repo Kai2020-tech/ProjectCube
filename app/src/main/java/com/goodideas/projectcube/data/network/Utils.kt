@@ -15,13 +15,15 @@ suspend fun <T> safeApiCall(
 ): ResResult<T> {
     return withContext(dispatcher) {
         try {
+            val apiResult = apiCall.invoke()
+
             ResResult.Success(apiCall.invoke())
         } catch (throwable: Throwable) {
             when (throwable) {
-                is IOException -> ResResult.Fail("IOException : Network error !!")
+                is IOException -> ResResult.Fail("${throwable.message} IOException : Network error !!")
                 is HttpException -> {
                     val errorResponse = convertErrorBody(throwable)
-                    ResResult.Fail(errorResponse?.title ?: "")
+                    ResResult.Fail(errorResponse?.message ?: "")
                 }
                 else -> {
                     ResResult.Fail("other error!!")

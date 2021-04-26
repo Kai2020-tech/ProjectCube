@@ -21,7 +21,9 @@ class CubeApp : Application() {
     private fun setupKoin() {
 
         val repoModule = module {
+            single { com.goodideas.projectcube.data.network.ApiService }
             single<IRegisterRepo> { RegisterRepo(get()) }
+
         }
 
         val vmModule = module {

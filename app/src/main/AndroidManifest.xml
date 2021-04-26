@@ -3,10 +3,11 @@
     package="com.goodideas.projectcube">
     
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:networkSecurityConfig="@xml/no_https_config"
-        android:name=".CubeApp"
+        android:name="com.goodideas.projectcube.CubeApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

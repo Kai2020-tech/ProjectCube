@@ -1,8 +1,16 @@
 package com.goodideas.projectcube.data.dto.register
+import com.google.gson.annotations.SerializedName
 
 data class ErrorResponse(
-    val detail: String?,
-    val status: Int,
-    val title: String,
-    val type: String
-)
+    @SerializedName("errors")
+    val errors: Errors = Errors(),
+    @SerializedName("message")
+    val message: String = "" // The given data was invalid.
+) {
+    data class Errors(
+        @SerializedName("email")
+        val email: List<String> = listOf(),
+        @SerializedName("password")
+        val password: List<String> = listOf()
+    )
+}

@@ -1,5 +1,6 @@
 package com.goodideas.projectcube.data.network
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,6 +14,8 @@ object ApiService {
     private val interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
+
+//    val gson = GsonBuilder().setLenient().create()
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(interceptor)

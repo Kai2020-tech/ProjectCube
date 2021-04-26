@@ -18,9 +18,11 @@ class RegisterViewModel(
     fun register(name: String, email: String, pwd: String, confirmPwd: String) {
         Timber.d("repo.register")
         viewModelScope.launch {
-            RegisterResult.value = repo.register(name, email, pwd, confirmPwd) is ResResult.Success
-            val tmp = repo.register(name, email, pwd, confirmPwd)
-            Timber.d("$tmp")
+            val response = repo.register(name, email, pwd, confirmPwd)
+
+            RegisterResult.value = response.isSuccessful
+
+            Timber.d("$response")
         }
     }
 

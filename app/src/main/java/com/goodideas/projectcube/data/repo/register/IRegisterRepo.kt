@@ -10,5 +10,14 @@ interface IRegisterRepo {
         email: String,
         pwd: String,
         confirmPwd: String
-    ): ResResult<RegisterRes>
+    ): Response<RegisterRes>
 }
+
+//interface IRegisterRepo {
+//    suspend fun register(
+//        name: String,
+//        email: String,
+//        pwd: String,
+//        confirmPwd: String
+//    ): ResResult<RegisterRes>
+//}

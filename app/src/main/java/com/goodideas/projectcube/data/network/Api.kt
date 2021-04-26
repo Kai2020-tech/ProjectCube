@@ -9,7 +9,6 @@ import retrofit2.http.POST
 
 
 interface Api {
-
     @POST("register")
     suspend fun register(@Body req: RegisterReq): Response<RegisterRes>
 }

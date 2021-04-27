@@ -25,7 +25,9 @@ class RegisterViewModel(
             val response = repo.register(name, email, pwd, confirmPwd)
             if (response.isSuccessful) {
                 registerResult.value = true
-                registerMessage = response.body()?.token ?: "no token"
+                token = response.body()?.token ?: "no token"
+                Timber.d(token)
+                registerMessage = token
             } else {
                 val gson = Gson()
                 val type = object : TypeToken<ErrorResponse>() {}.type

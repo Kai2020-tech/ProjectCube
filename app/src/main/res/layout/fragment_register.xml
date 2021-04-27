@@ -58,8 +58,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
-                android:singleLine="true"
-                android:text="12345678" />
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.ProjectCube.TextInputLayout"
@@ -77,8 +76,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:singleLine="true"
-                android:text="12345678" />
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

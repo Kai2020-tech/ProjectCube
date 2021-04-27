@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.data.network.token
@@ -52,7 +54,7 @@ class RegisterFragment : Fragment() {
 
             } finally {
                 // might move this to other place, for make sure email wouldn't repeat
-//                findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
             }
         }
     }

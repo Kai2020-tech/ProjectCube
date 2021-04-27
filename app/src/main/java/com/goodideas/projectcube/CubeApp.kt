@@ -1,8 +1,11 @@
 package com.goodideas.projectcube
 
 import android.app.Application
+import com.goodideas.projectcube.data.repo.posts.IPostsRepo
+import com.goodideas.projectcube.data.repo.posts.PostsRepo
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
 import com.goodideas.projectcube.data.repo.register.RegisterRepo
+import com.goodideas.projectcube.ui.ArticleListViewModel
 import com.goodideas.projectcube.ui.Login.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -20,19 +23,24 @@ class CubeApp : Application() {
 
     private fun setupKoin() {
 
-        val repoModule = module {
+        val apiModule = module {
             single { com.goodideas.projectcube.data.network.ApiService }
-            single<IRegisterRepo> { RegisterRepo(get()) }
+        }
 
+        val repoModule = module {
+            single<IRegisterRepo> { RegisterRepo(get()) }
+            single<IPostsRepo> {  PostsRepo(get())}
         }
 
         val vmModule = module {
             viewModel { RegisterViewModel(get()) }
+            viewModel { ArticleListViewModel(get()) }
         }
 
         startKoin {
             androidContext(this@CubeApp)
             modules(
+                apiModule,
                 repoModule,
                 vmModule
             )

@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.hideKeyboard
+import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -36,6 +37,10 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initButtonOnClick()
+
+        vm.registerResult.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, vm.registerMessage, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initButtonOnClick() {

@@ -5,12 +5,11 @@ import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import com.goodideas.projectcube.data.repo.posts.PostsRepo
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
 import com.goodideas.projectcube.data.repo.register.RegisterRepo
-import com.goodideas.projectcube.ui.ArticleListViewModel
-import com.goodideas.projectcube.ui.Login.RegisterViewModel
+import com.goodideas.projectcube.ui.ArticleList.ArticleListViewModel
+import com.goodideas.projectcube.ui.Register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.dsl.module
 import timber.log.Timber
 
@@ -29,7 +28,7 @@ class CubeApp : Application() {
 
         val repoModule = module {
             single<IRegisterRepo> { RegisterRepo(get()) }
-            single<IPostsRepo> {  PostsRepo(get())}
+            single<IPostsRepo> { PostsRepo(get())}
         }
 
         val vmModule = module {

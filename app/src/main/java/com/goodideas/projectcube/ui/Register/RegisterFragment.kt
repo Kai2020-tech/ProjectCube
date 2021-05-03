@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.Login
+package com.goodideas.projectcube.ui.Register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.hideKeyboard
-import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.Login
+package com.goodideas.projectcube.ui.Register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +26,7 @@ class RegisterViewModel(
             if (response.isSuccessful) {
                 registerResult.value = true
                 token = response.body()?.token ?: "no token"
-                Timber.d(token)
+                Timber.d("token%s", token)
                 registerMessage = token
             } else {
                 val gson = Gson()
@@ -35,7 +35,7 @@ class RegisterViewModel(
                     gson.fromJson(response.errorBody()!!.charStream(), type)
                 registerResult.value = false
                 registerMessage = errorResponse.message
-                Timber.d(errorResponse.message)
+                Timber.d("error%s", errorResponse.message)
             }
         }
     }

@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.goodideas.projectcube.ui.Login.RegisterFragment"
+        android:name="com.goodideas.projectcube.ui.Register.RegisterFragment"
         tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" >
         <action
@@ -43,6 +43,6 @@
     <fragment
         android:id="@+id/articleListFragment"
         tools:layout="@layout/fragment_article_list"
-        android:name="com.goodideas.projectcube.ui.ArticleListFragment"
+        android:name="com.goodideas.projectcube.ui.ArticleList.ArticleListFragment"
         android:label="ArticleListFragment" />
 </navigation>

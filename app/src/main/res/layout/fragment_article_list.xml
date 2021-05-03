@@ -9,16 +9,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ArticleListFragment">
+        tools:context=".ui.ArticleList.ArticleListFragment">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/article_recycler_list"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="32sp"
-            android:text="article fragment"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

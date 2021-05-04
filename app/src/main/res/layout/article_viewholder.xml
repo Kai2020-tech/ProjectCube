@@ -5,16 +5,17 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
-        android:layout_width="match_parent"
+        style="@style/article.Title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/article_title"/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/article_title"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/article_content_outline"
         android:maxLines="2"/>
     <TextView
@@ -22,5 +23,23 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/article_content_outline"
         android:id="@+id/article_post_time"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/like_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dislike_number"
+        app:drawableLeftCompat="@drawable/ic_baseline_thumb_up_alt_24" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dislike_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/like_number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:drawableLeftCompat="@drawable/ic_baseline_thumb_down_alt_24" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

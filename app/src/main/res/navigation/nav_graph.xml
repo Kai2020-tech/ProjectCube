@@ -44,5 +44,14 @@
         android:id="@+id/articleListFragment"
         tools:layout="@layout/fragment_article_list"
         android:name="com.goodideas.projectcube.ui.ArticleList.ArticleListFragment"
-        android:label="ArticleListFragment" />
+        android:label="ArticleListFragment" >
+        <action
+            android:id="@+id/action_articleListFragment_to_articleDetail"
+            app:destination="@id/articleDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleDetail"
+        android:name="com.goodideas.projectcube.ui.ReadArticle.ArticleDetail"
+        android:label="fragment_article_detail"
+        tools:layout="@layout/fragment_article_detail" />
 </navigation>

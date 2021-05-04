@@ -10,9 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryTextColor"
-        app:layout_constraintEnd_toStartOf="@+id/skip_button"
-        app:layout_constraintStart_toStartOf="@+id/skip_button"
         tools:context=".ui.Login.StartFragment">
 
         <androidx.constraintlayout.widget.Guideline

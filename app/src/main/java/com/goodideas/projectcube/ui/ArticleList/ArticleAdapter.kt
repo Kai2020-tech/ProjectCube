@@ -18,6 +18,8 @@ class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(Di
         val title = itemView.findViewById<TextView>(R.id.article_title)
         val content = itemView.findViewById<TextView>(R.id.article_content_outline)
         val date = itemView.findViewById<TextView>(R.id.article_post_time)
+        val like = itemView.findViewById<TextView>(R.id.like_number)
+        val dislike = itemView.findViewById<TextView>(R.id.dislike_number)
     }
 
     class DiffCompare: ItemCallback<PostsItem>(){
@@ -44,6 +46,8 @@ class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(Di
             it.date.text = created
             it.title.text = title
             it.itemView.setOnClickListener { click() }
+            it.like.text = "50"
+            it.dislike.text = "20"
         }
     }
 }

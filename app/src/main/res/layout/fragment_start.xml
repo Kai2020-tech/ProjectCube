@@ -10,7 +10,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryTextColor"
         tools:context=".ui.Login.StartFragment">
         <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"

@@ -14,17 +14,22 @@ import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.Util.onOffNightMode
 import com.goodideas.projectcube.databinding.FragmentStartBinding
 import org.koin.android.ext.android.bind
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class StartFragment : Fragment() {
     lateinit var binding: FragmentStartBinding
 
+    private val vm by viewModel<StartViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_start, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_start, container, false
+        )
 
         return binding.root
     }
@@ -38,13 +43,14 @@ class StartFragment : Fragment() {
 
     }
 
-    private fun imageRoundCorner(){
+    private fun imageRoundCorner() {
         Glide.with(this.requireContext())
             .load(R.drawable.goodideas)
             .transform(RoundedCorners(20))
             .into(binding.logoImg)
     }
-    private fun initButtonOnClick(){
+
+    private fun initButtonOnClick() {
         binding.loginButton.setOnClickListener {
             hideKeyboard(it)
             loginConfirm()
@@ -59,12 +65,15 @@ class StartFragment : Fragment() {
         }
     }
 
-    private fun loginConfirm(){
-        //TODO post login request
+    private fun loginConfirm() {
+        //TODO for ui test, need remove before release
+        val email = "N19@gamil.com"
+        val pwd = "123456"
+        vm.login(email, pwd)
     }
 
     //TODO for ui test, need remove before release
-    private fun initNightModeSwitch(){
+    private fun initNightModeSwitch() {
         binding.nightModeSwitch.setOnCheckedChangeListener { _, isChecked ->
             onOffNightMode(isChecked)
         }

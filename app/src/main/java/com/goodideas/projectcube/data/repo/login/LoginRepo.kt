@@ -1,9 +1,8 @@
 package com.goodideas.projectcube.data.repo.login
 
-import com.goodideas.projectcube.data.dto.login.LoginReq
-import com.goodideas.projectcube.data.dto.login.LoginRes
+import com.goodideas.projectcube.data.dto.auth.LoginReq
+import com.goodideas.projectcube.data.dto.auth.LoginRes
 import com.goodideas.projectcube.data.network.ApiService
-import com.goodideas.projectcube.data.network.ResResult
 import retrofit2.Response
 
 class LoginRepo(private val source: ApiService) : ILoginRepo {

@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.data.dto.login
+package com.goodideas.projectcube.data.dto.auth
 import com.google.gson.annotations.SerializedName
 
 

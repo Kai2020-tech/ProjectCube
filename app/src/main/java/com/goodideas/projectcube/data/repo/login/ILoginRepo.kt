@@ -1,6 +1,6 @@
 package com.goodideas.projectcube.data.repo.login
 
-import com.goodideas.projectcube.data.dto.login.LoginRes
+import com.goodideas.projectcube.data.dto.auth.LoginRes
 import retrofit2.Response
 
 interface ILoginRepo {

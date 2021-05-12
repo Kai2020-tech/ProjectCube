@@ -64,5 +64,7 @@ class ArticleListFragment : Fragment() {
                     Int.MIN_VALUE,"title2","update")))
         })
 
+
+
     }
 }

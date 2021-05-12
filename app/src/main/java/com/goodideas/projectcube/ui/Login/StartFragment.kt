@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -15,6 +16,7 @@ import com.goodideas.projectcube.Util.onOffNightMode
 import com.goodideas.projectcube.databinding.FragmentStartBinding
 import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class StartFragment : Fragment() {
@@ -66,13 +68,13 @@ class StartFragment : Fragment() {
     }
 
     private fun loginConfirm() {
-        //TODO for ui test, need remove before release
+        // TODO for ui test, need remove before release
         val email = "N19@gamil.com"
         val pwd = "123456"
         vm.login(email, pwd)
     }
 
-    //TODO for ui test, need remove before release
+    // TODO for ui test, need remove before release
     private fun initNightModeSwitch() {
         binding.nightModeSwitch.setOnCheckedChangeListener { _, isChecked ->
             onOffNightMode(isChecked)

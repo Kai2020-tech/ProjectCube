@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goodideas.projectcube.data.dto.posts.Posts
+import com.goodideas.projectcube.data.network.Api
+import com.goodideas.projectcube.data.network.ApiService
 import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import com.goodideas.projectcube.data.repo.posts.PostsRepo
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
@@ -27,4 +29,6 @@ class ArticleListViewModel(private val repo: IPostsRepo) : ViewModel() {
             Timber.d("${postsList.value}")
         }
     }
+
+
 }

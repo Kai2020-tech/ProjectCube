@@ -9,7 +9,9 @@ class HeaderInterceptor : Interceptor {
         val builder = request.newBuilder()
         builder.addHeader("Accept", "application/json")
         val token = token
-        if (token.isNotBlank()) builder.addHeader("Authorization", token)
+        if (token.isNotBlank() && token != "") {
+            builder.addHeader("Authorization", "Bearer $token")
+        }
         return chain.proceed(builder.build())
     }
 }

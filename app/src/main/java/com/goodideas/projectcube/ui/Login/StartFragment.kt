@@ -43,6 +43,8 @@ class StartFragment : Fragment() {
         initNightModeSwitch()
         imageRoundCorner()
 
+
+
     }
 
     private fun imageRoundCorner() {

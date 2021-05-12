@@ -30,5 +30,4 @@ class ArticleListViewModel(private val repo: IPostsRepo) : ViewModel() {
         }
     }
 
-
 }

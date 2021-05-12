@@ -29,6 +29,7 @@ class StartViewModel(
                 token = response.body()?.token ?: "no token"
                 Timber.d("login success. $token")
                 getUserProfile()
+                logout()
             } else {
 //                val gson = Gson()
 //                val type = object : TypeToken<ErrorResponse>() {}.type
@@ -51,4 +52,12 @@ class StartViewModel(
             }
         }
     }
+
+    fun logout(){
+        viewModelScope.launch {
+            val response = ApiService.retrofit.logout()
+            Timber.d("${response.body()}")
+        }
+    }
+
 }

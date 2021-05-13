@@ -30,4 +30,10 @@ class ArticleListViewModel(private val repo: IPostsRepo) : ViewModel() {
         }
     }
 
+    fun getSinglePost(postId: Int){
+        viewModelScope.launch {
+            val response = ApiService.retrofit.getSinglePost(postId)
+            Timber.d("${response.body()}")
+        }
+    }
 }

@@ -42,6 +42,8 @@ class StartViewModel(
         }
     }
 
+    //below fun just for test
+
     fun getUserProfile(){
         viewModelScope.launch {
             val response = ApiService.retrofit.getProfile()
@@ -59,5 +61,7 @@ class StartViewModel(
             Timber.d("${response.body()}")
         }
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import com.goodideas.projectcube.data.dto.auth.LoginReq
 import com.goodideas.projectcube.data.dto.auth.LoginRes
 import com.goodideas.projectcube.data.dto.auth.LogoutRes
 import com.goodideas.projectcube.data.dto.posts.Posts
+import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
@@ -27,4 +28,9 @@ interface Api {
 
     @GET("posts")
     suspend fun getPosts(): Response<Posts>
+
+    @GET("posts/{postId}")
+    suspend fun getSinglePost(
+        @Path("postId")id: Int
+    ): Response<SinglePostRes>
 }

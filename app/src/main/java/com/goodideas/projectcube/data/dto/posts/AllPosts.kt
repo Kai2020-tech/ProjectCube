@@ -1,6 +1,6 @@
 package com.goodideas.projectcube.data.dto.posts
 
-class Posts : ArrayList<PostsItem>()
+class AllPosts : ArrayList<PostsItem>()
 
 data class PostsItem(
     val content: String,

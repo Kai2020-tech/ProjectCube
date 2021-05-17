@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -14,6 +15,7 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.data.dto.posts.PostsItem
 import com.goodideas.projectcube.databinding.FragmentArticleListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class ArticleListFragment : Fragment() {
@@ -21,7 +23,7 @@ class ArticleListFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     val adapter = ArticleAdapter()
 
-     private val vm by viewModel<ArticleListViewModel>()
+    private val vm by viewModel<ArticleListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +38,8 @@ class ArticleListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter.click = {
-            //need pass article id
-            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetail)
+            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetail,
+                bundleOf(Pair("articleId", it)))
         }
 
         vm.getPosts()
@@ -47,19 +49,21 @@ class ArticleListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initObserver()
+        initUI()
+    }
+    private fun initObserver(){
         vm.allPostsList.observe(viewLifecycleOwner, Observer {
-//            adapter.submitList(it ?: listOf(
-//                PostsItem("content","date",
-//                    Int.MIN_VALUE,"title","update")))
-            //fake data
-            adapter.submitList(listOf(
-                PostsItem("content","date",
-                    Int.MIN_VALUE,"title","update"),
-                PostsItem("content2","date",
-                    Int.MIN_VALUE,"title2","update")))
+            adapter.submitList(it ?: listOf(
+                PostsItem("empty content","date",
+                    Int.MIN_VALUE,"empty title","update")))
         })
+    }
 
-        vm.getSinglePost(2)
-
+    private fun initUI(){
+        binding.createNewArticle.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
+        }
     }
 }

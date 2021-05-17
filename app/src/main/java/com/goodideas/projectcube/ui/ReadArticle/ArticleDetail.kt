@@ -7,26 +7,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.databinding.FragmentArticleDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ArticleDetail : Fragment() {
     lateinit var binding:FragmentArticleDetailBinding
+    private val vm by viewModel<ArticleDetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_article_detail, container, false)
+
+        val articleId = Bundle().getInt("articleId")
+        vm.getSinglePost(articleId)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUI()
+        initObserver()
+    }
+    private fun initObserver(){
+        vm.singlePostContent.observe(viewLifecycleOwner, Observer {
+            binding.title.text = it.title
+            binding.content.text = it.content
+        })
+    }
+    private fun initUI(){
         binding.more.setOnClickListener {
-            //TODO check isauthor
+            //TODO check is author
             val authorArticle = arrayOf("edit", "delete", "report")
             val notAuthorArticle = arrayOf("report")
 

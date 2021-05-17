@@ -12,31 +12,41 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
+enum class ResponseStatus{SUCCESS, FAIL, LOADING,BEFORE}
 class StartViewModel(
     private val repo: ILoginRepo
 ) : ViewModel() {
 
+    val loginResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 
-    val loginResult: MutableLiveData<Boolean> = MutableLiveData()
-
+    fun initLoginResult(){
+        loginResult.postValue(ResponseStatus.BEFORE)
+    }
     fun login(email: String, pwd: String) {
         Timber.d("login")
+//        viewModelScope.launch {
+//            val response = repo.login(email, pwd)
+//            if (response.isSuccessful) {
+//                loginResult.value = true
+//                token = response.body()?.token ?: "no token"
+//                Timber.d("login success. $token")
+////                getUserProfile()
+//                //why logout
+////                logout()
+//            } else {
+//                loginResult.value = false
+//                Timber.d("login fail.")
+//            }
+//        }
         viewModelScope.launch {
             val response = repo.login(email, pwd)
+            loginResult.value = ResponseStatus.LOADING
             if (response.isSuccessful) {
-                loginResult.value = true
+                loginResult.value = ResponseStatus.SUCCESS
                 token = response.body()?.token ?: "no token"
                 Timber.d("login success. $token")
-                getUserProfile()
-                logout()
             } else {
-//                val gson = Gson()
-//                val type = object : TypeToken<ErrorResponse>() {}.type
-//                val errorResponse: ErrorResponse =
-//                    gson.fromJson(response.errorBody()!!.charStream(), type)
-//                Timber.d("error%s", errorResponse.message)
-                loginResult.value = false
+                loginResult.value = ResponseStatus.FAIL
                 Timber.d("login fail.")
             }
         }

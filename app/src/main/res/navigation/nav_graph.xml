@@ -46,12 +46,24 @@
         android:name="com.goodideas.projectcube.ui.ArticleList.ArticleListFragment"
         android:label="ArticleListFragment" >
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
             android:id="@+id/action_articleListFragment_to_articleDetail"
             app:destination="@id/articleDetail" />
+        <action
+            android:id="@+id/action_articleListFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleDetail"
         android:name="com.goodideas.projectcube.ui.ReadArticle.ArticleDetail"
         android:label="fragment_article_detail"
         tools:layout="@layout/fragment_article_detail" />
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.goodideas.projectcube.ui.CreatePost.CreatePostFragment"
+        android:label="CreatePostFragment"
+        tools:layout="@layout/fragment_create_post"/>
 </navigation>

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.goodideas.projectcube.data.dto.register.ErrorResponse
 import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
+import com.goodideas.projectcube.ui.Login.ResponseStatus
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
@@ -16,15 +17,20 @@ class RegisterViewModel(
 ) : ViewModel() {
 
 
-    val registerResult: MutableLiveData<Boolean> = MutableLiveData()
+    val registerResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
     var registerMessage = ""
+    fun initRegisterResult(){
+        registerResult.postValue(ResponseStatus.BEFORE)
+    }
 
     fun register(name: String, email: String, pwd: String, confirmPwd: String) {
         Timber.d("repo.register")
         viewModelScope.launch {
             val response = repo.register(name, email, pwd, confirmPwd)
+            registerResult.value = ResponseStatus.LOADING
+
             if (response.isSuccessful) {
-                registerResult.value = true
+                registerResult.value = ResponseStatus.SUCCESS
                 token = response.body()?.token ?: "no token"
                 Timber.d("token%s", token)
                 registerMessage = token
@@ -33,7 +39,7 @@ class RegisterViewModel(
                 val type = object : TypeToken<ErrorResponse>() {}.type
                 val errorResponse: ErrorResponse =
                     gson.fromJson(response.errorBody()!!.charStream(), type)
-                registerResult.value = false
+                registerResult.value = ResponseStatus.FAIL
                 registerMessage = errorResponse.message
                 Timber.d("error%s", errorResponse.message)
             }

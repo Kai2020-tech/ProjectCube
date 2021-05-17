@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -32,6 +33,7 @@ class StartFragment : Fragment() {
             inflater,
             R.layout.fragment_start, container, false
         )
+        vm.initLoginResult()
 
         return binding.root
     }
@@ -42,9 +44,7 @@ class StartFragment : Fragment() {
         initButtonOnClick()
         initNightModeSwitch()
         imageRoundCorner()
-
-
-
+        initObserver()
     }
 
     private fun imageRoundCorner() {
@@ -52,13 +52,37 @@ class StartFragment : Fragment() {
             .load(R.drawable.goodideas)
             .transform(RoundedCorners(20))
             .into(binding.logoImg)
+
+        Glide.with(this.requireContext())
+            .load("https://i.imgur.com/8UI3aoa.gif")
+            .into(binding.loading)
+    }
+
+    private fun initObserver(){
+        vm.loginResult.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                ResponseStatus.SUCCESS -> {
+                    binding.logoImg.visibility = View.GONE
+                    findNavController().navigate(R.id.action_startFragment_to_articleListFragment)
+                }
+                ResponseStatus.FAIL -> {
+                    binding.logoImg.visibility = View.GONE
+                    Toast.makeText(
+                        this.requireContext(),
+                        "Login fail, please check email and password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                ResponseStatus.LOADING -> binding.loading.visibility = View.VISIBLE
+                ResponseStatus.BEFORE -> Timber.d("startFragment")
+            }
+        })
     }
 
     private fun initButtonOnClick() {
         binding.loginButton.setOnClickListener {
             hideKeyboard(it)
             loginConfirm()
-            findNavController().navigate(R.id.action_startFragment_to_articleListFragment)
         }
         binding.skipButton.setOnClickListener {
             findNavController().navigate(R.id.action_startFragment_to_articleListFragment)

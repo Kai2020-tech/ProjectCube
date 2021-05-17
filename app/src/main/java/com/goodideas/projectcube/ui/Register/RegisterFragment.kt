@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
+import com.goodideas.projectcube.ui.Login.ResponseStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.Exception
@@ -25,35 +27,50 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_register, container, false
         )
+        vm.initRegisterResult()
         // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initButtonOnClick()
+        initUI()
 
-        vm.registerResult.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, vm.registerMessage, Toast.LENGTH_SHORT).show()
-        })
+        initObserver()
     }
 
-    private fun initButtonOnClick() {
-        binding.registerButton.setOnClickListener {
-            try {
-                hideKeyboard(it)
-                checkFormat()
-            } catch (e: Exception) {
+    private fun initObserver(){
+        vm.registerResult.observe(viewLifecycleOwner, Observer {
+            when(it){
+                ResponseStatus.SUCCESS -> {
+                    binding.loading.visibility = View.GONE
+                    findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
+                }
+                ResponseStatus.FAIL -> {
+                    binding.loading.visibility = View.GONE
+                    Toast.makeText(context, vm.registerMessage, Toast.LENGTH_SHORT).show()
+                }
+                ResponseStatus.BEFORE -> Timber.d("RegisterFragment")
+                ResponseStatus.LOADING -> binding.loading.visibility = View.VISIBLE
 
-            } finally {
-                // might move this to other place, for make sure email wouldn't repeat
-                findNavController().navigate(R.id.action_registerFragment_to_articleListFragment)
             }
+        })
+
+
+    }
+    private fun initUI() {
+        Glide.with(this.requireContext())
+            .load("https://i.imgur.com/8UI3aoa.gif")
+            .into(binding.loading)
+
+        binding.registerButton.setOnClickListener {
+            hideKeyboard(it)
+            checkFormat()
         }
     }
 
@@ -65,13 +82,13 @@ class RegisterFragment : Fragment() {
 //        val confirm = binding.reconfirmPasswordText.editText?.text
         val confirm = "12345678"
 
-        if (password == confirm && password != null && password.length >= 8) {
+        if (password == confirm && password.isNotBlank() && password.length >= 8) {
             Timber.d("vm register")
             vm.register(
                 name = "33",
                 email.toString(),
-                password.toString(),
-                confirm.toString()
+                password,
+                confirm
             )
         } else {
             // TODO ask user to change data

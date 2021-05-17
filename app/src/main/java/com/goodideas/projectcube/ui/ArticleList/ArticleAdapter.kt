@@ -11,7 +11,7 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.data.dto.posts.PostsItem
 
 class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
-    var click:()->Unit = {}
+    var click:(Int)->Unit = {}
     
     class ArticleViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val title = itemView.findViewById<TextView>(R.id.article_title)
@@ -39,12 +39,12 @@ class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(Di
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val (content,created,_,title,_ ) = getItem(position)
+        val (content,created,articleId,title,_ ) = getItem(position)
         holder.let {
             it.content.text = content
             it.date.text = created
             it.title.text = title
-            it.itemView.setOnClickListener { click() }
+            it.itemView.setOnClickListener { click(articleId) }
             it.like.text = "50"
             it.dislike.text = "20"
         }

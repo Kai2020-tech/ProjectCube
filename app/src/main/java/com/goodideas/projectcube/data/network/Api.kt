@@ -3,6 +3,9 @@ package com.goodideas.projectcube.data.network
 import com.goodideas.projectcube.data.dto.auth.LoginReq
 import com.goodideas.projectcube.data.dto.auth.LoginRes
 import com.goodideas.projectcube.data.dto.auth.LogoutRes
+import com.goodideas.projectcube.data.dto.commands.CommandsOfPostRes
+import com.goodideas.projectcube.data.dto.commands.CreateCommandReq
+import com.goodideas.projectcube.data.dto.commands.CreateCommandRes
 import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
@@ -25,20 +28,37 @@ interface Api {
     @POST("user/profile")
     suspend fun getProfile(): Response<ProfileRes>
 
-    //post ------------------------------
+    //posts ------------------------------
     @GET("posts")
     suspend fun getAllPosts(): Response<AllPosts>
 
     @GET("posts/{postId}")
     suspend fun getSinglePost(
-        @Path("postId")id: Int
+        @Path("postId") id: Int
     ): Response<SinglePostRes>
 
     @GET("posts/search/{keyword}")
     suspend fun getSearchedPost(
-        @Path("keyword")keyword: String
+        @Path("keyword") keyword: String
     ): Response<SearchPostRes>
 
     @POST("posts")
     suspend fun createPost(@Body req: CreatePostReq): Response<CreatePostRes>
+
+    @PUT("posts/{postId}")
+    suspend fun updatePost(
+        @Path("postId") id: Int,
+        @Body req: CreatePostReq
+    ): Response<SinglePostRes>
+
+    //commands ------------------------------
+    @GET("posts/{postId}/commands")
+    suspend fun getCommandsOfPost(
+        @Path("postId") id: Int
+    ): Response<CommandsOfPostRes>
+
+    @POST("commands")
+    suspend fun createCommand(
+        @Body req: CreateCommandReq
+    ): Response<CreateCommandRes>
 }

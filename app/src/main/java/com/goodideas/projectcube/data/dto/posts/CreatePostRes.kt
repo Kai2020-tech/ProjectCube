@@ -1,25 +1,19 @@
 package com.goodideas.projectcube.data.dto.posts
 import com.google.gson.annotations.SerializedName
 
-
 data class CreatePostRes(
-    @SerializedName("first_command")
-    val firstCommand: String? = null,
-    @SerializedName("post")
-    val post: Post? = null
-)
-
-data class Post(
     @SerializedName("content")
-    val content: String? = null,
+    val content: String = "", // testContent
     @SerializedName("created_at")
-    val createdAt: String? = null,
+    val createdAt: String = "", // 2021-05-14T16:58:04.000000Z
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int = 0, // 1
+    @SerializedName("image")
+    val image: String = "", // null
     @SerializedName("title")
-    val title: String? = null,
+    val title: String = "", // testTitle
     @SerializedName("updated_at")
-    val updatedAt: String? = null,
+    val updatedAt: String = "", // 2021-05-14T16:58:04.000000Z
     @SerializedName("user_id")
-    val userId: Int? = null
+    val userId: Int = 0 // 6
 )

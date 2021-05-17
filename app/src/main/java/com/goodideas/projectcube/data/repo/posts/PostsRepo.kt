@@ -6,7 +6,7 @@ import com.goodideas.projectcube.data.network.ApiService
 import retrofit2.Response
 
 class PostsRepo(private val source: ApiService) : IPostsRepo {
-    override suspend fun getPosts(): Response<AllPosts> {
+    override suspend fun getAllPosts(): Response<AllPosts> {
         return source.retrofit.getAllPosts()
     }
 

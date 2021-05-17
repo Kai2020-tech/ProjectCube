@@ -10,22 +10,23 @@ import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
 
 interface Api {
     //user ------------------------------
-    @POST("user/register")
+    @POST("register")
     suspend fun register(@Body req: RegisterReq): Response<RegisterRes>
 
-    @POST("user/login")
+    @POST("login")
     suspend fun login(@Body req: LoginReq): Response<LoginRes>
 
-    @POST("user/logout")
+    @POST("logout")
     suspend fun logout(): Response<LogoutRes>
 
-    @POST("user/profile")
+    @POST("profile")
     suspend fun getProfile(): Response<ProfileRes>
 
     //posts ------------------------------
@@ -43,7 +44,12 @@ interface Api {
     ): Response<SearchPostRes>
 
     @POST("posts")
-    suspend fun createPost(@Body req: CreatePostReq): Response<CreatePostRes>
+    @Multipart
+    suspend fun createPost(
+        @Part title: MultipartBody.Part?,
+        @Part content: MultipartBody.Part?,
+        @Part image: MultipartBody.Part?,
+    ): Response<CreatePostRes>
 
     @PUT("posts/{postId}")
     suspend fun updatePost(

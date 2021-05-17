@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
-import com.goodideas.projectcube.data.dto.posts.Posts
 import com.goodideas.projectcube.data.dto.posts.PostsItem
 
 class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {

@@ -2,7 +2,7 @@ package com.goodideas.projectcube.data.dto.posts
 import com.google.gson.annotations.SerializedName
 
 
-data class NewPostRes(
+data class CreatePostRes(
     @SerializedName("first_command")
     val firstCommand: String? = null,
     @SerializedName("post")

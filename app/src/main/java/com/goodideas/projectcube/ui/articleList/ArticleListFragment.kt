@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.ArticleList
+package com.goodideas.projectcube.ui.articleList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,10 +12,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
-import com.goodideas.projectcube.data.dto.posts.AllPosts
 import com.goodideas.projectcube.databinding.FragmentArticleListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 class ArticleListFragment : Fragment() {

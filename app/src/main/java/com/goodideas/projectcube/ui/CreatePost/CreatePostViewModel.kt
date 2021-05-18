@@ -12,7 +12,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class CreatePostViewModel : ViewModel() {
+class CreatePostViewModel(private val source: ApiService) : ViewModel() {
 
 
     private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
@@ -29,7 +29,7 @@ class CreatePostViewModel : ViewModel() {
         imageUri: Uri?
     ) {
         viewModelScope.launch {
-            ApiService.retrofit.createPost(t, c, getPhoto(imageUri))
+            source.retrofit.createPost(t, c, getPhoto(imageUri))
         }
     }
 }

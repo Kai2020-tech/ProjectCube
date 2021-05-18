@@ -7,27 +7,27 @@ import com.google.gson.annotations.SerializedName
 class AllPosts : ArrayList<AllPostsItem>()
 data class AllPostsItem(
     @SerializedName("avatar")
-    val avatar: String? = null,
+    val avatar: String,
     @SerializedName("comment_count")
-    val commentCount: Int? = null,
+    val commentCount: Int,
     @SerializedName("content")
-    val content: String? = null,
+    val content: String,
     @SerializedName("created_at")
-    val createdAt: String? = null,
+    val createdAt: String,
     @SerializedName("dislike_count")
-    val dislikeCount: Int? = null,
+    val dislikeCount: Int,
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
     @SerializedName("image")
-    val image: String? = null,
+    val image: String,
     @SerializedName("like_count")
-    val likeCount: Int? = null,
+    val likeCount: Int,
     @SerializedName("name")
-    val name: String? = null,
+    val name: String,
     @SerializedName("title")
-    val title: String? = null,
+    val title: String,
     @SerializedName("updated_at")
-    val updatedAt: String? = null,
+    val updatedAt: String,
     @SerializedName("user_id")
-    val userId: Int? = null
+    val userId: Int
 )

@@ -11,7 +11,7 @@ import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ArticleDetailViewModel() : ViewModel() {
+class ArticleDetailViewModel(private val source: ApiService) : ViewModel() {
 
     private val _singlePostContent = MutableLiveData<SinglePostRes>()
     val singlePostContent:LiveData<SinglePostRes>
@@ -19,7 +19,7 @@ class ArticleDetailViewModel() : ViewModel() {
 
     fun getSinglePost(postId: Int){
         viewModelScope.launch {
-            val response = ApiService.retrofit.getSinglePost(postId)
+            val response = source.retrofit.getSinglePost(postId)
             _singlePostContent.postValue(response.body())
             Timber.d("${response.body()}")
         }

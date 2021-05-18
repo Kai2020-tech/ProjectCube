@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/articleListFragment"
         tools:layout="@layout/fragment_article_list"
-        android:name="com.goodideas.projectcube.ui.ArticleList.ArticleListFragment"
+        android:name="com.goodideas.projectcube.ui.articleList.ArticleListFragment"
         android:label="ArticleListFragment" >
         <action
             app:enterAnim="@anim/slide_in_right"

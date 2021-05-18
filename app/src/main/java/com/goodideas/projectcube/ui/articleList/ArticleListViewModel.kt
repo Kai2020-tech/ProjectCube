@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.ArticleList
+package com.goodideas.projectcube.ui.articleList
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

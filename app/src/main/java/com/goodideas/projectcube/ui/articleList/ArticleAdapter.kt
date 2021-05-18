@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.ArticleList
+package com.goodideas.projectcube.ui.articleList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,25 +8,25 @@ import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
-import com.goodideas.projectcube.data.dto.posts.PostsItem
+import com.goodideas.projectcube.data.dto.posts.AllPostsItem
 
-class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
+class ArticleAdapter:ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
     var click:(Int)->Unit = {}
     
     class ArticleViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-        val title = itemView.findViewById<TextView>(R.id.article_title)
-        val content = itemView.findViewById<TextView>(R.id.article_content_outline)
+        val titleView = itemView.findViewById<TextView>(R.id.article_title)
+        val contentView = itemView.findViewById<TextView>(R.id.article_content_outline)
         val date = itemView.findViewById<TextView>(R.id.article_post_time)
         val like = itemView.findViewById<TextView>(R.id.like_number)
         val dislike = itemView.findViewById<TextView>(R.id.dislike_number)
     }
 
-    class DiffCompare: ItemCallback<PostsItem>(){
-        override fun areItemsTheSame(oldItem: PostsItem, newItem:PostsItem): Boolean {
+    class DiffCompare: ItemCallback<AllPostsItem>(){
+        override fun areItemsTheSame(oldItem: AllPostsItem, newItem:AllPostsItem): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: PostsItem, newItem: PostsItem): Boolean {
+        override fun areContentsTheSame(oldItem: AllPostsItem, newItem: AllPostsItem): Boolean {
             return oldItem == newItem
         }
 
@@ -39,14 +39,14 @@ class ArticleAdapter:ListAdapter<PostsItem, ArticleAdapter.ArticleViewHolder>(Di
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val (content,created,articleId,title,_ ) = getItem(position)
+        val (_,commentCount,content,created,dislike,articleId,image,like,title,update,authorId) = getItem(position)
         holder.let {
-            it.content.text = content
+            it.contentView.text = content
             it.date.text = created
-            it.title.text = title
-            it.itemView.setOnClickListener { click(articleId) }
-            it.like.text = "50"
-            it.dislike.text = "20"
+            it.titleView.text = title
+            it.itemView.setOnClickListener { articleId?.let { it1 -> click(it1) } }
+            it.like.text = like.toString()
+            it.dislike.text = dislike.toString()
         }
     }
 }

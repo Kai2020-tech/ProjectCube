@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.data.dto.posts.AllPosts
 import com.goodideas.projectcube.databinding.FragmentArticleListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,12 +54,12 @@ class ArticleListFragment : Fragment() {
     }
     private fun initObserver(){
         vm.allPostsList.observe(viewLifecycleOwner, Observer {
-//            adapter.submitList(it ?: listOf(
+            adapter.submitList(it ?: listOf(
 //                AllPosts.PostsItem(
 //                    "empty content", "date",
 //                    Int.MIN_VALUE, "empty title", "update"
 //                )
-//            ))
+            ))
         })
     }
 

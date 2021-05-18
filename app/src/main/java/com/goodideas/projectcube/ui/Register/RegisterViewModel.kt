@@ -3,10 +3,10 @@ package com.goodideas.projectcube.ui.Register
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.data.dto.register.ErrorResponse
 import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
-import com.goodideas.projectcube.ui.Login.ResponseStatus
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch

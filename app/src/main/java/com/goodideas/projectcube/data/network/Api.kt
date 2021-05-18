@@ -29,6 +29,8 @@ interface Api {
     @POST("profile")
     suspend fun getProfile(): Response<ProfileRes>
 
+
+
     //posts ------------------------------
     @GET("posts")
     suspend fun getAllPosts(): Response<AllPosts>
@@ -57,7 +59,14 @@ interface Api {
         @Part title: MultipartBody.Part?,
         @Part content: MultipartBody.Part?,
         @Part image: MultipartBody.Part?,
-    ): Response<SinglePostRes>
+    ): Response<UpdatePostRes>
+
+    @DELETE("posts/{postId}")
+    suspend fun deletePost(
+        @Path("postId") id: Int
+    ): Response<DeletePostRes>
+
+
 
     //comments ------------------------------
     @GET("posts/{postId}/commands")

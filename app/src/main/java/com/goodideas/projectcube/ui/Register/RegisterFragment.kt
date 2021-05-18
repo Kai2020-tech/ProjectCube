@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
-import com.goodideas.projectcube.ui.Login.ResponseStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.Exception

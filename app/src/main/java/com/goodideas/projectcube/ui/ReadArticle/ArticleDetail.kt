@@ -36,8 +36,8 @@ class ArticleDetail : Fragment() {
     }
     private fun initObserver(){
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
-            binding.title.text = it.title
-            binding.content.text = it.content
+//            binding.title.text = it.post?.title
+//            binding.content.text = it.post?.content
         })
     }
     private fun initUI(){

@@ -54,7 +54,9 @@ interface Api {
     @PUT("posts/{postId}")
     suspend fun updatePost(
         @Path("postId") id: Int,
-        @Body req: CreatePostReq
+        @Part title: MultipartBody.Part?,
+        @Part content: MultipartBody.Part?,
+        @Part image: MultipartBody.Part?,
     ): Response<SinglePostRes>
 
     //commands ------------------------------

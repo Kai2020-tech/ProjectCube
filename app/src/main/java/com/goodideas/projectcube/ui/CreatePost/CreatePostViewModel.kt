@@ -2,14 +2,33 @@ package com.goodideas.projectcube.ui.CreatePost
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.goodideas.projectcube.data.dto.posts.CreatePostReq
 import com.goodideas.projectcube.data.network.ApiService
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
-class CreatePostViewModel:ViewModel() {
-    fun createPost(t:String,c:String){
+class CreatePostViewModel : ViewModel() {
+
+
+    private fun getPhoto(fileUri: File?): MultipartBody.Part? {
+        val file = File(fileUri?.path ?: "")
+        return if (file.exists()) {
+            val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("image", file.name, requestFile)
+        } else null
+    }
+
+    fun createPost(
+        t: MultipartBody.Part,
+        c: MultipartBody.Part,
+        imageUri: File?
+    ) {
         viewModelScope.launch {
-            ApiService.retrofit.createPost(CreatePostReq(t,c))
+            ApiService.retrofit.createPost(t, c, getPhoto(imageUri))
         }
     }
 }

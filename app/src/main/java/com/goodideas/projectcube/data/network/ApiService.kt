@@ -8,7 +8,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL = "http://rrrui.site/api"
+private const val BASE_URL = " http://api.rrrui.site/api"
+//private const val BASE_URL = " http://54.249.177.151/api"
 
 var token = ""
 

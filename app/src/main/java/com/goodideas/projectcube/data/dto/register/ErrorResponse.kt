@@ -9,8 +9,6 @@ data class ErrorResponse(
 ) {
     data class Errors(
         @SerializedName("email")
-        val email: List<String> = listOf(),
-        @SerializedName("password")
-        val password: List<String> = listOf()
+        val email: List<String> = listOf()
     )
 }

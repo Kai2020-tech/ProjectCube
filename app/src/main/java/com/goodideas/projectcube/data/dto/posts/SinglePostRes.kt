@@ -7,12 +7,10 @@ data class SinglePostRes(
     val content: String? = null,
     @SerializedName("created_at")
     val createdAt: String? = null,
-    @SerializedName("dislikes")
-    val dislikes: Int? = null,
     @SerializedName("id")
     val id: Int? = null,
-    @SerializedName("likes")
-    val likes: Int? = null,
+    @SerializedName("image")
+    val image: String? = null,
     @SerializedName("title")
     val title: String? = null,
     @SerializedName("updated_at")

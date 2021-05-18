@@ -5,27 +5,22 @@ import com.google.gson.annotations.SerializedName
 
 data class RegisterRes(
     @SerializedName("token")
-    val token: String,
-
+    val token: String = "", // personal_access_token
     @SerializedName("user")
-    val user: User
+    val user: User = User()
 ) {
     data class User(
-
+        @SerializedName("avatar")
+        val avatar: String = "", // null
         @SerializedName("created_at")
-        val created_at: String,
-
+        val createdAt: String = "", // 2021-05-14T11:07:14.000000Z
         @SerializedName("email")
-        val email: String,
-
+        val email: String = "", // regi@regi.com
         @SerializedName("id")
-        val id: Int,
-
+        val id: Int = 0, // 6
         @SerializedName("name")
-        val name: String,
-
+        val name: String = "", // regi
         @SerializedName("updated_at")
-        val updated_at: String
+        val updatedAt: String = "" // 2021-05-14T11:07:14.000000Z
     )
 }
-

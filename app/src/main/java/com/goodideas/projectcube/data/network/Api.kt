@@ -51,7 +51,7 @@ interface Api {
         @Part image: MultipartBody.Part?,
     ): Response<CreatePostRes>
 
-    @PUT("posts/{postId}")
+    @PATCH("posts/{postId}")
     suspend fun updatePost(
         @Path("postId") id: Int,
         @Part title: MultipartBody.Part?,
@@ -59,7 +59,7 @@ interface Api {
         @Part image: MultipartBody.Part?,
     ): Response<SinglePostRes>
 
-    //commands ------------------------------
+    //comments ------------------------------
     @GET("posts/{postId}/commands")
     suspend fun getCommandsOfPost(
         @Path("postId") id: Int

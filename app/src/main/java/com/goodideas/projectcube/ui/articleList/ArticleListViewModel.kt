@@ -15,7 +15,7 @@ class ArticleListViewModel(private val repo: IPostsRepo) : ViewModel() {
     fun getPosts() {
         viewModelScope.launch {
             allPostsList.value = repo.getAllPosts().body()
-            Timber.d("${allPostsList.value}")
+//            Timber.d("${allPostsList.value}")
         }
     }
 }

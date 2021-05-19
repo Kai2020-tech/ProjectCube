@@ -15,6 +15,8 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+var userId = Int.MIN_VALUE
+
 class StartViewModel(
     private val repo: LoginRepo
 ) : ViewModel() {
@@ -46,6 +48,7 @@ class StartViewModel(
             if (response.isSuccessful) {
                 loginResult.value = ResponseStatus.SUCCESS
                 token = response.body()?.token ?: "no token"
+                userId = response.body()?.user?.id ?: Int.MIN_VALUE
                 Timber.d("login success. $token")
             } else {
                 loginResult.value = ResponseStatus.FAIL

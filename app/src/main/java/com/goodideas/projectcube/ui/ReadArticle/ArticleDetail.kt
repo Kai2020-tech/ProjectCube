@@ -10,8 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.databinding.FragmentArticleDetailBinding
+import com.goodideas.projectcube.ui.Login.userId
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class ArticleDetail : Fragment() {
     lateinit var binding:FragmentArticleDetailBinding
@@ -24,8 +26,12 @@ class ArticleDetail : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_article_detail, container, false)
 
-        val articleId = Bundle().getInt("articleId")
-        vm.getSinglePost(articleId)
+        val articleId = arguments?.getInt("articleId") ?: Int.MIN_VALUE
+        Timber.d(articleId.toString())
+        if (articleId == Int.MIN_VALUE){
+            Toast.makeText(this.requireContext(), "article mismatch, please try again",Toast.LENGTH_SHORT).show()
+        }
+        else vm.getSinglePost(articleId)
         return binding.root
     }
 
@@ -36,22 +42,24 @@ class ArticleDetail : Fragment() {
     }
     private fun initObserver(){
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
-//            binding.title.text = it.post?.title
-//            binding.content.text = it.post?.content
+            binding.title.text = it.post?.get(0)?.title
+            binding.content.text = it.post?.get(0)?.content
         })
     }
     private fun initUI(){
         binding.more.setOnClickListener {
-            //TODO check is author
-            val authorArticle = arrayOf("edit", "delete", "report")
+            val authorArticle = arrayOf("report","edit", "delete")
             val notAuthorArticle = arrayOf("report")
 
             MaterialAlertDialogBuilder(this.requireContext())
-                .setItems(authorArticle) { dialog, which ->
-                    when(authorArticle[which]){
-                        "edit" -> Toast.makeText(this.requireContext(),"edit $which", Toast.LENGTH_SHORT).show()
-                        "delete" -> Toast.makeText(this.requireContext(),"delete $which", Toast.LENGTH_SHORT).show()
-                        else -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
+                .setItems(
+                    if(vm.singlePostContent.value?.post?.get(0)?.id == userId) authorArticle
+                    else notAuthorArticle
+                ) { dialog, which ->
+                    when(which){
+                        0 -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
+                        1 -> Toast.makeText(this.requireContext(),"edit $which", Toast.LENGTH_SHORT).show()
+                        else -> Toast.makeText(this.requireContext(),"delete $which", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .show()

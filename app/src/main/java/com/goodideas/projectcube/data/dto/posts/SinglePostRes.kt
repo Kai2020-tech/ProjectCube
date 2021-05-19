@@ -1,6 +1,6 @@
 package com.goodideas.projectcube.data.dto.posts
 import com.google.gson.annotations.SerializedName
-
+//single post , 為什麼用list<post>
 data class SinglePostRes(
     @SerializedName("comments")
     val comments: List<Comment>? = null,

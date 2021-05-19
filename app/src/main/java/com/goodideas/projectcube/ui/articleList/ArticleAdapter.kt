@@ -44,7 +44,7 @@ class ArticleAdapter:ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>
             it.contentView.text = content
             it.date.text = created
             it.titleView.text = title
-            it.itemView.setOnClickListener { articleId?.let { it1 -> click(it1) } }
+            it.itemView.setOnClickListener { click(articleId) }
             it.like.text = like.toString()
             it.dislike.text = dislike.toString()
         }

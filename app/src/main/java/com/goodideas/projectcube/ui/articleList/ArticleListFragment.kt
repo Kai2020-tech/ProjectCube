@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.data.dto.posts.AllPosts
+import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.databinding.FragmentArticleListBinding
+import com.goodideas.projectcube.ui.Login.userId
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 class ArticleListFragment : Fragment() {
@@ -37,8 +40,9 @@ class ArticleListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter.click = {
+            Timber.d(it.toString())
             view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetail,
-                bundleOf(Pair("articleId", it)))
+                bundleOf("articleId" to it))
         }
 
         vm.getPosts()
@@ -54,16 +58,12 @@ class ArticleListFragment : Fragment() {
     }
     private fun initObserver(){
         vm.allPostsList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it ?: listOf(
-//                AllPosts.PostsItem(
-//                    "empty content", "date",
-//                    Int.MIN_VALUE, "empty title", "update"
-//                )
-            ))
+            adapter.submitList(it ?: AllPosts())
         })
     }
 
     private fun initUI(){
+        if (userId != Int.MIN_VALUE && token != "") binding.createNewArticle.visibility = View.VISIBLE
         binding.createNewArticle.setOnClickListener {
             view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
         }

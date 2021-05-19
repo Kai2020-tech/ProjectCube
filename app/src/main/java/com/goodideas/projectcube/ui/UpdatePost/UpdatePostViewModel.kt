@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.CreatePost
+package com.goodideas.projectcube.ui.UpdatePost
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-class CreatePostViewModel(private val repo: PostsRepo) : ViewModel() {
 
-    val createPostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
+class UpdatePostViewModel(private val repo: PostsRepo) : ViewModel() {
 
+    val updatePostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 
     private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
         val file = File(imageUri?.path ?: "")
@@ -24,17 +24,19 @@ class CreatePostViewModel(private val repo: PostsRepo) : ViewModel() {
         } else null
     }
 
-    fun createPost(
+
+    fun UpdatePost(
+        id: Int,
         t: MultipartBody.Part,
         c: MultipartBody.Part,
         imageUri: Uri?
     ) {
         viewModelScope.launch {
-            val response = repo.createPost(t, c, getPhoto(imageUri))
+            val response = repo.updatePost(id, t, c, getPhoto(imageUri))
             if (response.isSuccessful){
-                createPostResult.value = ResponseStatus.SUCCESS
+                updatePostResult.value = ResponseStatus.SUCCESS
             }else{
-                createPostResult.value = ResponseStatus.FAIL
+                updatePostResult.value = ResponseStatus.FAIL
             }
         }
     }

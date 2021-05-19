@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.data.dto.register.ErrorResponse
 import com.goodideas.projectcube.data.network.ApiService
 import com.goodideas.projectcube.data.network.token
@@ -13,7 +14,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import timber.log.Timber
-enum class ResponseStatus{SUCCESS, FAIL, LOADING,BEFORE}
+
 class StartViewModel(
     private val repo: LoginRepo
 ) : ViewModel() {

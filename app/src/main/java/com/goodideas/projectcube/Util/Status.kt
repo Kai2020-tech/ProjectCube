@@ -5,3 +5,5 @@ enum class Status {
     ERROR,
     LOADING
 }
+
+enum class ResponseStatus{SUCCESS, FAIL, LOADING,BEFORE}

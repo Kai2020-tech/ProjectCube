@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.Util.onOffNightMode
 import com.goodideas.projectcube.databinding.FragmentStartBinding
@@ -95,8 +96,8 @@ class StartFragment : Fragment() {
 
     private fun loginConfirm() {
         // TODO for ui test, need remove before release
-        val email = "N19@gamil.com"
-        val pwd = "123456"
+        val email = "test01@test.com"
+        val pwd = "12345678"
         vm.login(email, pwd)
     }
 

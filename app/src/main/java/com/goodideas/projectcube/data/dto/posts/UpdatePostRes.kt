@@ -2,9 +2,7 @@ package com.goodideas.projectcube.data.dto.posts
 import com.google.gson.annotations.SerializedName
 
 
-class SearchPostRes : ArrayList<SearchPostResItem>()
-
-data class SearchPostResItem(
+data class UpdatePostRes(
     @SerializedName("content")
     val content: String? = null,
     @SerializedName("created_at")

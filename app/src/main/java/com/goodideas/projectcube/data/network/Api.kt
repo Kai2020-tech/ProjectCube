@@ -3,9 +3,7 @@ package com.goodideas.projectcube.data.network
 import com.goodideas.projectcube.data.dto.auth.LoginReq
 import com.goodideas.projectcube.data.dto.auth.LoginRes
 import com.goodideas.projectcube.data.dto.auth.LogoutRes
-import com.goodideas.projectcube.data.dto.commands.CommandsOfPostRes
-import com.goodideas.projectcube.data.dto.commands.CreateCommandReq
-import com.goodideas.projectcube.data.dto.commands.CreateCommandRes
+import com.goodideas.projectcube.data.dto.comments.*
 import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
@@ -28,7 +26,6 @@ interface Api {
 
     @POST("profile")
     suspend fun getProfile(): Response<ProfileRes>
-
 
 
     //posts ------------------------------
@@ -67,15 +64,26 @@ interface Api {
     ): Response<DeletePostRes>
 
 
-
     //comments ------------------------------
-    @GET("posts/{postId}/commands")
-    suspend fun getCommandsOfPost(
+    @GET("comments/{postId}/")
+    suspend fun getCommentsOfPost(
         @Path("postId") id: Int
-    ): Response<CommandsOfPostRes>
+    ): Response<CommentsOfPostRes>
 
-    @POST("commands")
-    suspend fun createCommand(
-        @Body req: CreateCommandReq
-    ): Response<CreateCommandRes>
+    @POST("comments/{postId}")
+    suspend fun createComment(
+        @Path("postId") id: Int,
+        @Body req: CreateCommentReq
+    ): Response<CreateCommentRes>
+
+    @PATCH("comments/comment/{commentId}")
+    suspend fun updateComment(
+        @Path("commentId") id: Int,
+        @Body req: CreateCommentReq
+    ): Response<UpdateCommentRes>
+
+    @DELETE("comments/comment/{commentId}")
+    suspend fun deleteComment(
+        @Path("commentId") id: Int
+    ): Response<DeleteCommentRes>
 }

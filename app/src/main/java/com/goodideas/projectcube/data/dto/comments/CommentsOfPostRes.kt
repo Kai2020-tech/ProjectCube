@@ -1,9 +1,9 @@
-package com.goodideas.projectcube.data.dto.commands
+package com.goodideas.projectcube.data.dto.comments
 import com.google.gson.annotations.SerializedName
 
 
-class CommandsOfPostRes : ArrayList<CommandsOfPostRes.CommandItem>(){
-    data class CommandItem(
+class CommentsOfPostRes : ArrayList<CommentsOfPostRes.CommentsItem>(){
+    data class CommentsItem(
         @SerializedName("content")
         val content: String = "", // 葛文
         @SerializedName("created_at")

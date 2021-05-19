@@ -18,7 +18,7 @@ import timber.log.Timber
 var userId = Int.MIN_VALUE
 
 class StartViewModel(
-    private val repo: LoginRepo
+    private val repo: ILoginRepo
 ) : ViewModel() {
 
     val loginResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)

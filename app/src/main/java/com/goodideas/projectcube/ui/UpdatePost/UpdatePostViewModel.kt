@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goodideas.projectcube.Util.ResponseStatus
+import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import com.goodideas.projectcube.data.repo.posts.PostsRepo
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -12,7 +13,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class UpdatePostViewModel(private val repo: PostsRepo) : ViewModel() {
+class UpdatePostViewModel(private val repo: IPostsRepo) : ViewModel() {
 
     val updatePostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 

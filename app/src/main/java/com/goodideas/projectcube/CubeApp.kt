@@ -15,6 +15,7 @@ import com.goodideas.projectcube.ui.ReadArticle.ArticleDetailViewModel
 import com.goodideas.projectcube.ui.Register.RegisterViewModel
 import com.goodideas.projectcube.ui.SearchPost.SearchViewModel
 import com.goodideas.projectcube.ui.UpdatePost.UpdatePostViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -37,7 +38,7 @@ class CubeApp : Application() {
         val repoModule = module {
             single<IRegisterRepo> { RegisterRepo(get()) }
             single<IPostsRepo> { PostsRepo(get()) }
-            single { LoginRepo(get()) }
+            single<ILoginRepo> { LoginRepo(get()) }
         }
 
         val vmModule = module {
@@ -45,7 +46,7 @@ class CubeApp : Application() {
             viewModel { ArticleListViewModel(get()) }
             viewModel { StartViewModel(get()) }
             viewModel { ArticleDetailViewModel(get()) }
-            viewModel { CreatePostViewModel(get()) }
+            viewModel { CreatePostViewModel(get(), get()) }
             viewModel { UpdatePostViewModel(get()) }
             viewModel { SearchViewModel(get()) }
         }

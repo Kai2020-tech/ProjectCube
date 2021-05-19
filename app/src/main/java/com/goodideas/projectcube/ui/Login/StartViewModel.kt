@@ -47,7 +47,7 @@ class StartViewModel(
             loginResult.value = ResponseStatus.LOADING
             if (response.isSuccessful) {
                 loginResult.value = ResponseStatus.SUCCESS
-                token = response.body()?.token ?: "no token"
+                token = response.body()?.token ?: ""
                 userId = response.body()?.user?.id ?: Int.MIN_VALUE
                 Timber.d("login success. $token")
             } else {

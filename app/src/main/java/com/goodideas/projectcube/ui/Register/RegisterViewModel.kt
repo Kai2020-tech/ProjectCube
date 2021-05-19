@@ -31,7 +31,7 @@ class RegisterViewModel(
 
             if (response.isSuccessful) {
                 registerResult.value = ResponseStatus.SUCCESS
-                token = response.body()?.token ?: "no token"
+                token = response.body()?.token ?: ""
                 Timber.d("token%s", token)
                 registerMessage = token
             } else {

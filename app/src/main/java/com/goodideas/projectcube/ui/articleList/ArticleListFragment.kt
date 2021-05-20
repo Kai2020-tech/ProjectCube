@@ -49,7 +49,7 @@ class ArticleListFragment : Fragment() {
             inflater,
             R.layout.fragment_article_list, container, false
         )
-        autoLogin()
+//        autoLogin()
         vm.getPosts()
         adapter = ArticleAdapter(this.requireContext())
 

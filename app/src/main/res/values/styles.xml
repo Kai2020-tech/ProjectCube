@@ -27,4 +27,15 @@
     <style name="article.Title" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">24sp</item>
     </style>
+
+    <style name="NavigationUI.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Other attributes like colorPrimary, colorAccent etc. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+
+    <style name="Theme.TestDrawer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TestDrawer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

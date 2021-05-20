@@ -67,7 +67,8 @@
         android:id="@+id/articleDetail"
         android:name="com.goodideas.projectcube.ui.ReadArticle.ArticleDetail"
         android:label="fragment_article_detail"
-        tools:layout="@layout/fragment_article_detail" />
+        tools:layout="@layout/fragment_article_detail" >
+    </fragment>
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.goodideas.projectcube.ui.CreatePost.CreatePostFragment"

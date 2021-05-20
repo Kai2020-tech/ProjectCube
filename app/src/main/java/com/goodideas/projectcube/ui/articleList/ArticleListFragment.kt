@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.goodideas.projectcube.R
@@ -29,7 +30,7 @@ class ArticleListFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     private var email:String? = null
     private var password:String? = null
-    private val adapter = ArticleAdapter()
+    lateinit var adapter: ArticleAdapter
 
     private val vm by viewModel<ArticleListViewModel>()
     private val vmLogin by viewModel<StartViewModel>()
@@ -49,8 +50,8 @@ class ArticleListFragment : Fragment() {
             R.layout.fragment_article_list, container, false
         )
         autoLogin()
-
         vm.getPosts()
+        adapter = ArticleAdapter(this.requireContext())
 
         return binding.root
     }
@@ -79,9 +80,6 @@ class ArticleListFragment : Fragment() {
             with (sharedPref.edit()) {
                 putString(LOGIN_EMAIL, email)
                 putString(LOGIN_PASSWORD,password)
-                Timber.d("timber in edit")
-                Timber.d(email)
-                Timber.d(password)
                 commit()
             }
         }
@@ -113,6 +111,7 @@ class ArticleListFragment : Fragment() {
     }
     private fun initAdapter(){
         recyclerView = binding.articleRecyclerList
+        recyclerView.addItemDecoration(DividerItemDecoration(this.requireContext(),DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         adapter.click = {

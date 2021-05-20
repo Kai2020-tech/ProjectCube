@@ -1,6 +1,7 @@
 package com.goodideas.projectcube.data.repo.posts
 
 import com.goodideas.projectcube.data.dto.posts.*
+import com.goodideas.projectcube.data.dto.vote.VoteRes
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Part
@@ -26,4 +27,6 @@ interface IPostsRepo {
     suspend fun deletePost(id: Int): Response<DeletePostRes>
 
     suspend fun searchPost(keyword: String): Response<SearchPostRes>
+
+    suspend fun votePost(id: Int, state: String): Response<VoteRes>
 }

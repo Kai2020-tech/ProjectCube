@@ -1,6 +1,7 @@
 package com.goodideas.projectcube.data.repo.posts
 
 import com.goodideas.projectcube.data.dto.posts.*
+import com.goodideas.projectcube.data.dto.vote.VoteRes
 import com.goodideas.projectcube.data.network.ApiService
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -37,5 +38,9 @@ class PostsRepo(private val source: ApiService) : IPostsRepo {
 
     override suspend fun searchPost(keyword: String): Response<SearchPostRes> {
         return source.retrofit.getSearchedPost(keyword)
+    }
+
+    override suspend fun votePost(id: Int, state: String): Response<VoteRes> {
+        return source.retrofit.votePost(id, state)
     }
 }

@@ -8,6 +8,7 @@ import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
+import com.goodideas.projectcube.data.dto.vote.VoteRes
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -86,4 +87,12 @@ interface Api {
     suspend fun deleteComment(
         @Path("commentId") id: Int
     ): Response<DeleteCommentRes>
+
+
+    //vote ------------------------------
+    @POST("votes/{postId}/{vote}")
+    suspend fun votePost(
+        @Path("postId") id: Int,
+        @Path("vote") state:String
+    ): Response<VoteRes>
 }

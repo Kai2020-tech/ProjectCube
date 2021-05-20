@@ -26,7 +26,7 @@ import timber.log.Timber
 
 class SearchFragment : Fragment() {
     lateinit var binding:FragmentSearchBinding
-    lateinit var adapter:ArticleAdapter
+    lateinit var sadapter:ArticleAdapter
     lateinit var rv:RecyclerView
     private val viewModel by viewModel<SearchViewModel>()
 
@@ -46,9 +46,8 @@ class SearchFragment : Fragment() {
     }
     private fun initObserver(){
         viewModel.searchResult.observe(viewLifecycleOwner, Observer {
-            Timber.d(it.size.toString())
-            adapter.submitList(it)
-            adapter.notifyDataSetChanged()
+            if(it.size == 0 ) Toast.makeText(this.requireContext(), "no result found", Toast.LENGTH_SHORT).show()
+            sadapter.submitList(it)
         })
     }
     private fun initUi(){
@@ -57,18 +56,18 @@ class SearchFragment : Fragment() {
         else viewModel.searchPost(searchKeyWord)
 //        arguments?.putString("keyword",null)
 
-        adapter = ArticleAdapter((this.requireContext()))
-        rv = binding.articleRecyclerList
+        sadapter = ArticleAdapter((this.requireContext()))
+        rv = binding.searchRecyclerList
         rv.apply {
             layoutManager = LinearLayoutManager(this@SearchFragment.requireContext())
-            adapter = adapter
+            adapter = sadapter
             addItemDecoration(
                 DividerItemDecoration(this@SearchFragment.requireContext(),
                     DividerItemDecoration.VERTICAL)
             )
         }
 
-        binding.articleSearch.setOnClickListener {
+        binding.articleSearchS.setOnClickListener {
             val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)
             val query = dialogView.findViewById<EditText>(R.id.comment_write_dialog_edittext)
             AlertDialog.Builder(this.requireContext())

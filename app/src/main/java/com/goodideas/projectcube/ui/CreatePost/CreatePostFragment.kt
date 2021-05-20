@@ -12,17 +12,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
+import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.InputStream
 
+//圖片ui之後會改位置
 class CreatePostFragment : Fragment() {
     lateinit var binding: FragmentCreatePostBinding
     private val vm by viewModel<CreatePostViewModel>()
     var imageUri: Uri? = null
+    var editData:SinglePostRes? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +36,7 @@ class CreatePostFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_create_post, container, false
         )
-        this.requireActivity().actionBar?.hide()
+//        this.requireActivity().actionBar?.hide()
 
         return binding.root
     }
@@ -39,6 +44,29 @@ class CreatePostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+        checkEditOrCreate()
+    }
+    private fun checkEditOrCreate(){
+        editData = arguments?.getParcelable<SinglePostRes>("editArticle")
+        editData?.let {
+            val (_,post) = it
+            val data = post?.get(0)
+            binding.newPostTitle.setText(data?.title)
+            binding.newPostContent.setText(data?.content)
+            if (data?.image != "null"){
+                Glide.with(this.requireContext())
+                    .load(imagePrefix + data?.image)
+                    .into(binding.img)
+                binding.removePhoto.setOnClickListener {
+                    // TODO remove photo
+                    binding.imgHolder.visibility = View.GONE
+                }
+                binding.addImage.setOnClickListener {
+                    //todo this function need check add or not
+                    binding.imgHolder.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun initUI() {
@@ -46,11 +74,16 @@ class CreatePostFragment : Fragment() {
             val t = binding.newPostTitle.text.toString()
             val c = binding.newPostContent.text.toString()
             if (!t.isBlank() && !c.isBlank()) {
-                vm.createPost(
-                    MultipartBody.Part.createFormData("title", t),
-                    MultipartBody.Part.createFormData("content", c),
-                    imageUri
-                )
+                if (editData == null){
+                    vm.createPost(
+                        MultipartBody.Part.createFormData("title", t),
+                        MultipartBody.Part.createFormData("content", c),
+                        imageUri
+                    )
+                } else {
+                    Timber.d("update")
+                    //todo update
+                }
             } else {
                 Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
             }
@@ -68,6 +101,7 @@ class CreatePostFragment : Fragment() {
             imageUri = data?.data
             binding.img.setImageURI(imageUri)
             Timber.d(imageUri.toString())
+            binding.imgHolder.visibility = View.VISIBLE
         }
     }
 

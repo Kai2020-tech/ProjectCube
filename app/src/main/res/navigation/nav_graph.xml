@@ -71,6 +71,9 @@
         android:name="com.goodideas.projectcube.ui.ReadArticle.ArticleDetail"
         android:label="fragment_article_detail"
         tools:layout="@layout/fragment_article_detail" >
+        <action
+            android:id="@+id/action_articleDetail_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/createPostFragment"

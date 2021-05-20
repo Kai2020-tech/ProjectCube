@@ -82,6 +82,10 @@ class RegisterFragment : Fragment() {
 //        val confirm = binding.reconfirmPasswordText.editText?.text
         val confirm = "12345678"
 
+        if (email.isNullOrBlank()){
+            Toast.makeText(this.requireContext(), "email is not valid",Toast.LENGTH_SHORT).show()
+            return
+        }
         if (password == confirm && password.isNotBlank() && password.length >= 8) {
             Timber.d("vm register")
             vm.register(
@@ -91,13 +95,7 @@ class RegisterFragment : Fragment() {
                 confirm
             )
         } else {
-            // TODO ask user to change data
-        }
-
-        if (email != null) {
-            //TODO post to register
-        } else {
-            // TODO ask user to change data
+            Toast.makeText(this.requireContext(), "password mismatch",Toast.LENGTH_SHORT).show()
         }
     }
 

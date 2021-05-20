@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/create_new_article"
-            android:layout_margin="20dp"
+            android:layout_margin="18dp"
             android:src="@drawable/ic_baseline_add_24" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
             <TextView
-                style="@style/Widget.AppCompat.EditText"
+                android:textSize="24sp"
+                android:padding="6dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"

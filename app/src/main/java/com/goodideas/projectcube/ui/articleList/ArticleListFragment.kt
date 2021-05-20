@@ -1,6 +1,7 @@
 package com.goodideas.projectcube.ui.articleList
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -105,7 +106,9 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun initUI(){
-//        if (userId != Int.MIN_VALUE && token != "") binding.createNewArticle.visibility = View.VISIBLE
+        binding.articleSearch.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+
+        if (userId != Int.MIN_VALUE && token != "") binding.createNewArticle.visibility = View.VISIBLE
         binding.createNewArticle.setOnClickListener {
             view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
         }

@@ -38,6 +38,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/article_first_image"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="comment below"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,11 +57,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
             <TextView
-                style="@style/Widget.AppCompat.EditText"
+                android:textSize="24sp"
+                android:padding="6dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                android:hint="write your comment here"
+                android:hint="write your comment"
                 android:id="@+id/comment_edit"
                 app:layout_constraintEnd_toStartOf="@id/more"
                 app:layout_constraintTop_toTopOf="parent"

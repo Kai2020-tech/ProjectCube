@@ -1,13 +1,20 @@
 package com.goodideas.projectcube.data.dto.posts
+import android.os.Parcelable
+import androidx.versionedparcelable.ParcelField
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
 //single post , 為什麼用list<post>
+
+@Parcelize
 data class SinglePostRes(
     @SerializedName("comments")
     val comments: List<Comment>? = null,
     @SerializedName("post")
     val post: List<Post>? = null
-)
+) : Parcelable
 
+@Parcelize
 data class Comment(
     @SerializedName("content")
     val content: String? = null,
@@ -23,8 +30,9 @@ data class Comment(
     val updatedAt: String? = null,
     @SerializedName("user_id")
     val userId: Int? = null
-)
+) : Parcelable
 
+@Parcelize
 data class Post(
     @SerializedName("avatar")
     val avatar: String? = null,
@@ -50,4 +58,4 @@ data class Post(
     val updatedAt: String? = null,
     @SerializedName("user_id")
     val userId: Int? = null
-)
+) : Parcelable

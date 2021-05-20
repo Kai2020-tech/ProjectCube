@@ -46,6 +46,7 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val (avatar,commentCount,content,created,dislike,articleId,image,like,name,title,update,authorId) = getItem(position)
+        Timber.d(getItem(0).toString())
         holder.let {
             it.contentView.text = content
 //            it.date.text = created

@@ -2,6 +2,7 @@ package com.goodideas.projectcube.ui.ReadArticle
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,9 +32,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+const val imagePrefix = "http://api.rrrui.site/storage/"
+
 class ArticleDetail : Fragment() {
     lateinit var binding:FragmentArticleDetailBinding
-    lateinit var adapter: CommentAdapter
+    lateinit var sadapter: CommentAdapter
     lateinit var rv:RecyclerView
 
     private val vm by viewModel<ArticleDetailViewModel>()
@@ -64,21 +67,27 @@ class ArticleDetail : Fragment() {
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
             binding.title.text = it.post?.get(0)?.title
             binding.content.text = it.post?.get(0)?.content
-            val image = "http://api.rrrui.site/storage/" + it.post?.get(0)?.image
-            Timber.d(it.toString())
-            Glide.with(this.requireActivity())
-                .load(image)
-                .error(R.drawable.ic_baseline_error_outline_24)
-                .into(binding.articleFirstImage)
+            if (it.post?.get(0)?.image != "null"){
+                val image = imagePrefix + it.post?.get(0)?.image
+                Glide.with(this.requireActivity())
+                    .load(image)
+                    .error(R.drawable.ic_baseline_error_outline_24)
+                    .into(binding.articleFirstImage)
+            }
+
+            if (it.comments?.isNullOrEmpty() == true)Toast.makeText(this.requireContext(),"No comment",Toast.LENGTH_SHORT).show()
+            sadapter.submitList(it.comments)
         })
 
     }
     private fun initUI(){
-        adapter = CommentAdapter()
+        binding.commentEdit.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+
+        sadapter = CommentAdapter()
         rv = binding.articleComment
         rv.apply {
             layoutManager =LinearLayoutManager(this@ArticleDetail.requireContext())
-            adapter = adapter
+            adapter = sadapter
             addItemDecoration(
                 DividerItemDecoration(this@ArticleDetail.requireContext(),
                     DividerItemDecoration.VERTICAL)
@@ -98,7 +107,7 @@ class ArticleDetail : Fragment() {
                     Timber.d("more")
                     when(which){
                         0 -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
-                        1 -> Toast.makeText(this.requireContext(),"edit $which", Toast.LENGTH_SHORT).show()
+                        1 -> findNavController().navigate(R.id.action_articleDetail_to_createPostFragment, bundleOf("editArticle" to vm.singlePostContent.value))
                         else -> Timber.d("delete")// todo add delete method
                     }
                 }

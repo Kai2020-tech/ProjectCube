@@ -26,12 +26,40 @@
                 android:hint="type content you want to share"
                 app:layout_constraintTop_toBottomOf="@id/new_post_title"
                 android:id="@+id/new_post_content"/>
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/img"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintBottom_toTopOf="@id/btm_layout"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:layout_width="match_parent"
+                android:id="@+id/img_holder"
+                android:visibility="gone"
+                android:layout_height="160dp">
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/img"
+                    app:layout_constraintTop_toTopOf="@id/img_holder"
+                    app:layout_constraintBottom_toBottomOf="@id/img_holder"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="remove photo"
+                    android:id="@+id/remove_photo"
+                    app:layout_constraintTop_toTopOf="@id/img_holder"
+                    app:layout_constraintBottom_toTopOf="@id/insert_photo"
+                    app:layout_constraintEnd_toEndOf="@id/img_holder"
+                    app:layout_constraintStart_toEndOf="@id/img"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="insert photo"
+                    android:id="@+id/insert_photo"
+                    app:layout_constraintTop_toBottomOf="@id/remove_photo"
+                    app:layout_constraintBottom_toBottomOf="@id/img_holder"
+                    app:layout_constraintEnd_toEndOf="@id/img_holder"
+                    app:layout_constraintStart_toEndOf="@id/img"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout

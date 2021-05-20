@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectCube">
         <activity android:name="com.goodideas.projectcube.MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/ChangeAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

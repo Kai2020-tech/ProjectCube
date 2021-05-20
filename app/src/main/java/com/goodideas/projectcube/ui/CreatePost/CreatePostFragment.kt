@@ -12,8 +12,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
 import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
@@ -45,6 +48,18 @@ class CreatePostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         checkEditOrCreate()
+        initObserver()
+    }
+
+    private fun initObserver(){
+        vm.createPostResult.observe(viewLifecycleOwner, Observer {
+            when(it){
+                ResponseStatus.SUCCESS -> findNavController().navigate(R.id.action_createPostFragment_to_articleListFragment)
+                ResponseStatus.FAIL -> Toast.makeText(this.requireContext(), "fail, try again",Toast.LENGTH_SHORT).show()
+                ResponseStatus.LOADING ->Toast.makeText(this.requireContext(), "loading",Toast.LENGTH_SHORT).show()
+                ResponseStatus.BEFORE -> Timber.d("createpostfragment")
+            }
+        })
     }
     private fun checkEditOrCreate(){
         editData = arguments?.getParcelable<SinglePostRes>("editArticle")
@@ -54,6 +69,7 @@ class CreatePostFragment : Fragment() {
             binding.newPostTitle.setText(data?.title)
             binding.newPostContent.setText(data?.content)
             if (data?.image != "null"){
+                binding.imgHolder.visibility = View.VISIBLE
                 Glide.with(this.requireContext())
                     .load(imagePrefix + data?.image)
                     .into(binding.img)

@@ -101,7 +101,7 @@ class ArticleDetail : Fragment() {
 
             MaterialAlertDialogBuilder(this.requireContext())
                 .setItems(
-                    if(vm.singlePostContent.value?.post?.get(0)?.id == userId) authorArticle
+                    if(vm.singlePostContent.value?.post?.get(0)?.userId == userId) authorArticle
                     else notAuthorArticle
                 ) { dialog, which ->
                     Timber.d("more")

@@ -12,34 +12,41 @@
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/article_title"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/article_title"
+        app:layout_constraintEnd_toStartOf="@id/preview_image"
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/article_content_outline"
         android:maxLines="2"/>
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/article_content_outline"
-        android:id="@+id/article_post_time"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/like_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dislike_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:drawableLeftCompat="@drawable/ic_baseline_thumb_up_alt_24" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/dislike_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/like_number"
+        app:layout_constraintStart_toEndOf="@id/like_number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:drawableLeftCompat="@drawable/ic_baseline_thumb_down_alt_24" />
-
-
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/preview_image"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dislike_number"
+        android:id="@+id/comment_count"
+        android:drawableLeft="@drawable/ic_baseline_mode_comment_24"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,24 +1,30 @@
 package com.goodideas.projectcube.ui.articleList
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.data.dto.posts.AllPostsItem
+import timber.log.Timber
 
-class ArticleAdapter:ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
+class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
     var click:(Int)->Unit = {}
     
     class ArticleViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-        val titleView = itemView.findViewById<TextView>(R.id.article_title)
+        val titleView: TextView = itemView.findViewById<TextView>(R.id.article_title)
         val contentView = itemView.findViewById<TextView>(R.id.article_content_outline)
-        val date = itemView.findViewById<TextView>(R.id.article_post_time)
+//        val date = itemView.findViewById<TextView>(R.id.article_post_time)
         val like = itemView.findViewById<TextView>(R.id.like_number)
         val dislike = itemView.findViewById<TextView>(R.id.dislike_number)
+        val previewImage: ImageView = itemView.findViewById(R.id.preview_image)
+        val commentCount:TextView = itemView.findViewById(R.id.comment_count)
     }
 
     class DiffCompare: ItemCallback<AllPostsItem>(){
@@ -39,14 +45,22 @@ class ArticleAdapter:ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val (_,commentCount,content,created,dislike,articleId,image,like,title,update,authorId) = getItem(position)
+        val (avatar,commentCount,content,created,dislike,articleId,image,like,name,title,update,authorId) = getItem(position)
         holder.let {
             it.contentView.text = content
-            it.date.text = created
+//            it.date.text = created
             it.titleView.text = title
             it.itemView.setOnClickListener { click(articleId) }
             it.like.text = like.toString()
             it.dislike.text = dislike.toString()
+            it.commentCount.text = commentCount.toString()
+            if (image.isNotBlank() && image != "null"){
+                Glide.with(context)
+                    .load("http://api.rrrui.site/storage/$image")
+                    .error(R.drawable.ic_baseline_error_outline_24)
+                    .into(it.previewImage)
+            }
+            Timber.d(image)
         }
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navgraph"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/articleListFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -20,6 +20,8 @@
         <action
             android:id="@+id/action_startFragment_to_articleListFragment"
             app:destination="@id/articleListFragment"
+            app:popUpTo="@id/articleListFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -34,6 +36,8 @@
         <action
             android:id="@+id/action_registerFragment_to_articleListFragment"
             app:destination="@id/articleListFragment"
+            app:popUpTo="@id/articleListFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
@@ -55,6 +59,9 @@
         <action
             android:id="@+id/action_articleListFragment_to_createPostFragment"
             app:destination="@id/createPostFragment" />
+        <action
+            android:id="@+id/action_articleListFragment_to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleDetail"
@@ -66,4 +73,9 @@
         android:name="com.goodideas.projectcube.ui.CreatePost.CreatePostFragment"
         android:label="CreatePostFragment"
         tools:layout="@layout/fragment_create_post"/>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.goodideas.projectcube.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

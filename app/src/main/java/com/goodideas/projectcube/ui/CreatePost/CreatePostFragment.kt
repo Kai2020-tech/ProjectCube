@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
@@ -30,6 +31,8 @@ class CreatePostFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_create_post, container, false
         )
+        this.requireActivity().actionBar?.hide()
+
         return binding.root
     }
 
@@ -66,10 +69,6 @@ class CreatePostFragment : Fragment() {
             binding.img.setImageURI(imageUri)
             Timber.d(imageUri.toString())
         }
-    }
-
-    private fun uriToInputStream(uri:Uri): InputStream? {
-        return this.requireContext().contentResolver.openInputStream(uri)
     }
 
     companion object {

@@ -25,6 +25,6 @@
     </style>
 
     <style name="article.Title" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 </resources>

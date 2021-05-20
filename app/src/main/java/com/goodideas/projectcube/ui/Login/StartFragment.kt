@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -46,6 +47,7 @@ class StartFragment : Fragment() {
         initNightModeSwitch()
         imageRoundCorner()
         initObserver()
+
     }
 
     private fun imageRoundCorner() {
@@ -64,7 +66,14 @@ class StartFragment : Fragment() {
             when (it) {
                 ResponseStatus.SUCCESS -> {
                     binding.logoImg.visibility = View.GONE
-                    findNavController().navigate(R.id.action_startFragment_to_articleListFragment)
+//                    val em = binding.emailText.editText?.text.toString()
+//                    val ps = binding.passwordText.editText?.text.toString()
+                        Timber.d(binding.emailText.editText?.text.toString())
+                        Timber.d(binding.passwordText.editText?.text.toString())
+                    findNavController().navigate(R.id.action_startFragment_to_articleListFragment,
+                        bundleOf(
+                            "em" to binding.emailText.editText?.text.toString(),
+                            "ps" to binding.passwordText.editText?.text.toString()))
                 }
                 ResponseStatus.FAIL -> {
                     binding.logoImg.visibility = View.GONE
@@ -98,6 +107,8 @@ class StartFragment : Fragment() {
         // TODO for ui test, need remove before release
         val email = "test01@test.com"
         val pwd = "12345678"
+        binding.emailText.editText?.setText(email)
+        binding.passwordText.editText?.setText(pwd)
         vm.login(email, pwd)
     }
 

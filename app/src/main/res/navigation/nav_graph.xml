@@ -79,7 +79,13 @@
         android:id="@+id/createPostFragment"
         android:name="com.goodideas.projectcube.ui.CreatePost.CreatePostFragment"
         android:label="CreatePostFragment"
-        tools:layout="@layout/fragment_create_post"/>
+        tools:layout="@layout/fragment_create_post">
+        <action
+            app:popUpTo="@id/articleListFragment"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_createPostFragment_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.goodideas.projectcube.ui.profile.ProfileFragment"

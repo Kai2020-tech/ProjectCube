@@ -6,6 +6,8 @@ import com.goodideas.projectcube.data.dto.comments.DeleteCommentRes
 import com.goodideas.projectcube.data.dto.comments.UpdateCommentRes
 import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.vote.VoteRes
+import com.goodideas.projectcube.data.dto.vote.VoteState
+import com.goodideas.projectcube.data.dto.vote.VoteType
 import com.goodideas.projectcube.data.network.ApiService
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -46,10 +48,6 @@ class PostsRepo(private val source: ApiService) : IPostsRepo {
         return source.retrofit.getSearchedPost(keyword)
     }
 
-    override suspend fun votePost(id: Int, state: String): Response<VoteRes> {
-        return source.retrofit.votePost(id, state)
-    }
-
 
     //comments---------------------------------------
     override suspend fun createComment(
@@ -68,5 +66,14 @@ class PostsRepo(private val source: ApiService) : IPostsRepo {
 
     override suspend fun deleteComment(commentId: Int): Response<DeleteCommentRes> {
         return source.retrofit.deleteComment(commentId)
+    }
+
+    //vote
+    override suspend fun vote(
+        voteType: VoteType,
+        id: Int,
+        voteState: VoteState
+    ): Response<VoteRes> {
+        return source.retrofit.vote(voteType.typeName, id, voteState.stateName)
     }
 }

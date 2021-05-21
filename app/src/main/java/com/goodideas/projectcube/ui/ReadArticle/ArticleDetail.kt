@@ -65,10 +65,19 @@ class ArticleDetail : Fragment() {
     }
     private fun initObserver(){
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
-            binding.title.text = it.post?.get(0)?.title
-            binding.content.text = it.post?.get(0)?.content
-            if (it.post?.get(0)?.image != "null"){
-                val image = imagePrefix + it.post?.get(0)?.image
+//            binding.title.text = it.post?.get(0)?.title
+//            binding.content.text = it.post?.get(0)?.content
+//            if (it.post?.get(0)?.image != "null"){
+//                val image = imagePrefix + it.post?.get(0)?.image
+//                Glide.with(this.requireActivity())
+//                    .load(image)
+//                    .error(R.drawable.ic_baseline_error_outline_24)
+//                    .into(binding.articleFirstImage)
+//            }
+            binding.title.text = it.post?.title
+            binding.content.text = it.post?.content
+            if (it.post?.image != "null"){
+                val image = imagePrefix + it.post?.image
                 Glide.with(this.requireActivity())
                     .load(image)
                     .error(R.drawable.ic_baseline_error_outline_24)
@@ -101,7 +110,8 @@ class ArticleDetail : Fragment() {
 
             MaterialAlertDialogBuilder(this.requireContext())
                 .setItems(
-                    if(vm.singlePostContent.value?.post?.get(0)?.userId == userId) authorArticle
+//                    if(vm.singlePostContent.value?.post?.get(0)?.userId == userId) authorArticle
+                    if(vm.singlePostContent.value?.post?.userId == userId) authorArticle
                     else notAuthorArticle
                 ) { dialog, which ->
                     Timber.d("more")

@@ -11,6 +11,8 @@ import com.goodideas.projectcube.data.dto.profile.UpdateProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
 import com.goodideas.projectcube.data.dto.vote.VoteRes
+import com.goodideas.projectcube.data.dto.vote.VoteState
+import com.goodideas.projectcube.data.dto.vote.VoteType
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -99,9 +101,10 @@ interface Api {
 
 
     //vote ------------------------------
-    @POST("votes/{postId}/{vote}")
-    suspend fun votePost(
-        @Path("postId") id: Int,
-        @Path("vote") state: String
+    @POST("votes/{voteType}/{id}/{voteState}")
+    suspend fun vote(
+        @Path("voteType") voteType: String,
+        @Path("id") id: Int,
+        @Path("voteState") state: String
     ): Response<VoteRes>
 }

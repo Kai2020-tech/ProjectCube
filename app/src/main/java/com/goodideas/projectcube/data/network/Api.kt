@@ -6,6 +6,8 @@ import com.goodideas.projectcube.data.dto.auth.LogoutRes
 import com.goodideas.projectcube.data.dto.comments.*
 import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
+import com.goodideas.projectcube.data.dto.profile.UpdateProfileReq
+import com.goodideas.projectcube.data.dto.profile.UpdateProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
 import com.goodideas.projectcube.data.dto.vote.VoteRes
@@ -29,6 +31,11 @@ interface Api {
     suspend fun getProfile(
         @Path("userId") id: Int
     ): Response<ProfileRes>
+
+    @PATCH("profile")
+    suspend fun updateProfile(
+        @Body req: UpdateProfileReq
+    ): Response<UpdateProfileRes>
 
 
     //posts ------------------------------
@@ -95,6 +102,6 @@ interface Api {
     @POST("votes/{postId}/{vote}")
     suspend fun votePost(
         @Path("postId") id: Int,
-        @Path("vote") state:String
+        @Path("vote") state: String
     ): Response<VoteRes>
 }

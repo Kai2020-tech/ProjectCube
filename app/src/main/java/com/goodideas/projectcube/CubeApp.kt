@@ -53,7 +53,7 @@ class CubeApp : Application() {
             viewModel { CreatePostViewModel(get(), get()) }
             viewModel { UpdatePostViewModel(get()) }
             viewModel { SearchViewModel(get()) }
-            viewModel { ProfileViewModel(get()) }
+            viewModel { ProfileViewModel(get(), get()) }
         }
 
         startKoin {

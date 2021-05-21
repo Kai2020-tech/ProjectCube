@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goodideas.projectcube.Util.ResponseStatus
+import com.goodideas.projectcube.data.dto.comments.CreateCommentReq
 import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import com.goodideas.projectcube.data.repo.posts.PostsRepo
 import kotlinx.coroutines.launch
@@ -25,7 +26,9 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
-class CreatePostViewModel(private val repo: IPostsRepo, application: Application) : AndroidViewModel(application) {
+
+class CreatePostViewModel(private val repo: IPostsRepo, application: Application) :
+    AndroidViewModel(application) {
 
     val app = application
 
@@ -38,13 +41,47 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
     ) {
         viewModelScope.launch {
             val response = repo.createPost(t, c, compressImage(imageUri))
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 createPostResult.value = ResponseStatus.SUCCESS
-            }else{
+            } else {
                 createPostResult.value = ResponseStatus.FAIL
             }
         }
     }
+
+    fun createComment(postId: Int, content: String) {
+        viewModelScope.launch {
+            val response = repo.createComment(postId, CreateCommentReq(content))
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
+        }
+    }
+
+    fun updateComment(commentId: Int, content: String) {
+        viewModelScope.launch {
+            val response = repo.updateComment(commentId, CreateCommentReq(content))
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
+        }
+    }
+
+    fun deleteComment(commentId: Int) {
+        viewModelScope.launch {
+            val response = repo.deleteComment(commentId)
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun compressImage(imageUri: Uri?): MultipartBody.Part? {
@@ -56,7 +93,8 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
             //將bitmap進行品質壓縮到byteArrayOut, compress Quality 100->15
             val baoS: ByteArrayOutputStream? = ByteArrayOutputStream()
             rotatedBmp.compress(Bitmap.CompressFormat.JPEG, 15, baoS)
-            val requestFile = RequestBody.create("image/jpg".toMediaTypeOrNull(), baoS!!.toByteArray())
+            val requestFile =
+                RequestBody.create("image/jpg".toMediaTypeOrNull(), baoS!!.toByteArray())
             Timber.d("image requestFile Size ${requestFile.contentLength()}")
             MultipartBody.Part.createFormData("image", "sample.jpg", requestFile)
 

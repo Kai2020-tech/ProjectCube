@@ -28,7 +28,7 @@ class SearchViewModel(private val repo: IPostsRepo) : ViewModel() {
                 searchResult.value = response.body()?.SearchToArticle()
                 searchResultStatus.value = ResponseStatus.SUCCESS
             } else {
-                searchResult.value = null
+                searchResult.value = AllPosts()
                 searchResultStatus.value = ResponseStatus.FAIL
             }
         }

@@ -6,6 +6,8 @@ import com.goodideas.projectcube.data.repo.login.ILoginRepo
 import com.goodideas.projectcube.data.repo.login.LoginRepo
 import com.goodideas.projectcube.data.repo.posts.IPostsRepo
 import com.goodideas.projectcube.data.repo.posts.PostsRepo
+import com.goodideas.projectcube.data.repo.profile.IProfileRepo
+import com.goodideas.projectcube.data.repo.profile.ProfileRepo
 import com.goodideas.projectcube.data.repo.register.IRegisterRepo
 import com.goodideas.projectcube.data.repo.register.RegisterRepo
 import com.goodideas.projectcube.ui.articleList.ArticleListViewModel
@@ -15,6 +17,7 @@ import com.goodideas.projectcube.ui.ReadArticle.ArticleDetailViewModel
 import com.goodideas.projectcube.ui.Register.RegisterViewModel
 import com.goodideas.projectcube.ui.SearchPost.SearchViewModel
 import com.goodideas.projectcube.ui.UpdatePost.UpdatePostViewModel
+import com.goodideas.projectcube.ui.profile.ProfileViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -39,6 +42,7 @@ class CubeApp : Application() {
             single<IRegisterRepo> { RegisterRepo(get()) }
             single<IPostsRepo> { PostsRepo(get()) }
             single<ILoginRepo> { LoginRepo(get()) }
+            single<IProfileRepo> { ProfileRepo(get()) }
         }
 
         val vmModule = module {
@@ -49,6 +53,7 @@ class CubeApp : Application() {
             viewModel { CreatePostViewModel(get(), get()) }
             viewModel { UpdatePostViewModel(get()) }
             viewModel { SearchViewModel(get()) }
+            viewModel { ProfileViewModel(get()) }
         }
 
         startKoin {

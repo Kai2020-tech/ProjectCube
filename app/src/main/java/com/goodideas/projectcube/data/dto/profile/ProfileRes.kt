@@ -25,13 +25,13 @@ data class Posts(
     @SerializedName("links")
     val links: List<Link>? = null,
     @SerializedName("next_page_url")
-    val nextPageUrl: Any? = null,
+    val nextPageUrl: String? = null,
     @SerializedName("path")
     val path: String? = null,
     @SerializedName("per_page")
     val perPage: Int? = null,
     @SerializedName("prev_page_url")
-    val prevPageUrl: Any? = null,
+    val prevPageUrl: String? = null,
     @SerializedName("to")
     val to: Int? = null,
     @SerializedName("total")

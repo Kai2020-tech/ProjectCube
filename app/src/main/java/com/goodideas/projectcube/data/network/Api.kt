@@ -25,8 +25,10 @@ interface Api {
     @POST("logout")
     suspend fun logout(): Response<LogoutRes>
 
-    @POST("profile")
-    suspend fun getProfile(): Response<ProfileRes>
+    @POST("profile/{userId}")
+    suspend fun getProfile(
+        @Path("userId") id: Int
+    ): Response<ProfileRes>
 
 
     //posts ------------------------------

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val logoutRepo by inject<LoginRepo>()
@@ -52,14 +53,5 @@ class MainActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.logout -> Timber.d("logout")
-
-            else -> Timber.d("else")
-        }
-        return true
     }
 }

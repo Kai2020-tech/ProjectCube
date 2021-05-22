@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.goodideas.projectcube.ui.Register.RegisterFragment"
+        android:name="com.goodideas.projectcube.ui.Login.Register.RegisterFragment"
         tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" >
         <action
@@ -74,6 +74,9 @@
         <action
             android:id="@+id/action_articleDetail_to_createPostFragment"
             app:destination="@id/createPostFragment" />
+        <action
+            android:id="@+id/action_articleDetail_to_articleListFragment"
+            app:destination="@id/articleListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createPostFragment"
@@ -95,4 +98,8 @@
         android:id="@+id/searchFragment"
         android:name="com.goodideas.projectcube.ui.SearchPost.SearchFragment"
         android:label="SearchFragment" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.goodideas.projectcube.MainActivity"
+        android:label="MainActivity" />
 </navigation>

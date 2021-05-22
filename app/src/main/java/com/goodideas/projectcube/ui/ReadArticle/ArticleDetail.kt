@@ -38,6 +38,7 @@ class ArticleDetail : Fragment() {
     lateinit var binding:FragmentArticleDetailBinding
     lateinit var sadapter: CommentAdapter
     lateinit var rv:RecyclerView
+    private var articleId:Int? = null
 
     private val vm by viewModel<ArticleDetailViewModel>()
 
@@ -48,12 +49,12 @@ class ArticleDetail : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_article_detail, container, false)
 
-        val articleId = arguments?.getInt("articleId") ?: Int.MIN_VALUE
+        articleId = arguments?.getInt("articleId") ?: Int.MIN_VALUE
         Timber.d(articleId.toString())
         if (articleId == Int.MIN_VALUE){
             Toast.makeText(this.requireContext(), "article mismatch, please try again",Toast.LENGTH_SHORT).show()
         }
-        else vm.getSinglePost(articleId)
+        else vm.getSinglePost(articleId!!)
         return binding.root
     }
 
@@ -65,15 +66,6 @@ class ArticleDetail : Fragment() {
     }
     private fun initObserver(){
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
-//            binding.title.text = it.post?.get(0)?.title
-//            binding.content.text = it.post?.get(0)?.content
-//            if (it.post?.get(0)?.image != "null"){
-//                val image = imagePrefix + it.post?.get(0)?.image
-//                Glide.with(this.requireActivity())
-//                    .load(image)
-//                    .error(R.drawable.ic_baseline_error_outline_24)
-//                    .into(binding.articleFirstImage)
-//            }
             binding.title.text = it.post?.title
             binding.content.text = it.post?.content
             if (it.post?.image != "null"){
@@ -110,7 +102,6 @@ class ArticleDetail : Fragment() {
 
             MaterialAlertDialogBuilder(this.requireContext())
                 .setItems(
-//                    if(vm.singlePostContent.value?.post?.get(0)?.userId == userId) authorArticle
                     if(vm.singlePostContent.value?.post?.userId == userId) authorArticle
                     else notAuthorArticle
                 ) { dialog, which ->
@@ -118,7 +109,12 @@ class ArticleDetail : Fragment() {
                     when(which){
                         0 -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
                         1 -> findNavController().navigate(R.id.action_articleDetail_to_createPostFragment, bundleOf("editArticle" to vm.singlePostContent.value))
-                        else -> Timber.d("delete")// todo add delete method
+                        else -> {
+                            // todo kai add delete method
+                            //if success
+                            findNavController().navigate(R.id.action_articleDetail_to_articleListFragment)
+                            Timber.d("delete")
+                        }
                     }
                 }
                 .show()
@@ -130,9 +126,15 @@ class ArticleDetail : Fragment() {
             AlertDialog.Builder(this.requireContext())
                 .setTitle("comment")
                 .setPositiveButton("sent"){ _,_->
-                    //todo add sent comment
-                    Timber.d(query.text.toString())
-                    hideKeyboard(it)
+                    if (articleId == Int.MIN_VALUE || query.text.isNullOrBlank()){
+                        Toast.makeText(this.requireContext(),
+                            "invalid request, check comment content or article status",
+                        Toast.LENGTH_SHORT).show()
+                    } else {
+                        vm.createCommit(articleId!!, query.text.toString())
+                        //todo kai if success vm.getSinglePost(articleId!!)
+                        hideKeyboard(it)
+                    }
                 }
                 .setView(dialogView)
                 .show()

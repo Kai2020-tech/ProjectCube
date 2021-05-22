@@ -1,7 +1,6 @@
 package com.goodideas.projectcube
 
 import android.app.Application
-import android.app.SearchManager
 import com.goodideas.projectcube.data.repo.login.ILoginRepo
 import com.goodideas.projectcube.data.repo.login.LoginRepo
 import com.goodideas.projectcube.data.repo.posts.IPostsRepo
@@ -14,11 +13,10 @@ import com.goodideas.projectcube.ui.articleList.ArticleListViewModel
 import com.goodideas.projectcube.ui.CreatePost.CreatePostViewModel
 import com.goodideas.projectcube.ui.Login.StartViewModel
 import com.goodideas.projectcube.ui.ReadArticle.ArticleDetailViewModel
-import com.goodideas.projectcube.ui.Register.RegisterViewModel
+import com.goodideas.projectcube.ui.Login.Register.RegisterViewModel
 import com.goodideas.projectcube.ui.SearchPost.SearchViewModel
-import com.goodideas.projectcube.ui.UpdatePost.UpdatePostViewModel
+import com.goodideas.projectcube.ui.CreatePost.UpdatePostViewModel
 import com.goodideas.projectcube.ui.profile.ProfileViewModel
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin

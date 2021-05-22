@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.Register
+package com.goodideas.projectcube.ui.Login.Register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

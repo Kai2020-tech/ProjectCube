@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.goodideas.projectcube.data.dto.comments.CreateCommentReq
 import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.data.dto.vote.VoteState
 import com.goodideas.projectcube.data.dto.vote.VoteType
@@ -25,6 +26,12 @@ class ArticleDetailViewModel(private val repo: IPostsRepo) : ViewModel() {
                 _singlePostContent.postValue(response.body())
                 Timber.d("${response.body()}")
             }
+        }
+    }
+
+    fun createCommit(postId: Int, s:String){
+        viewModelScope.launch {
+            repo.createComment(postId, CreateCommentReq(s))
         }
     }
 

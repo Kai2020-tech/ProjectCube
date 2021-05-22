@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.UpdatePost
+package com.goodideas.projectcube.ui.CreatePost
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData

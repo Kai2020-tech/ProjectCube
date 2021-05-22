@@ -4,4 +4,8 @@
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_emoji_people_24"
         android:title="User Profile"/>
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="Logout"/>
 </menu>

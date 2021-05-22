@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -23,12 +22,12 @@ import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.io.InputStream
 
 //圖片ui之後會改位置
 class CreatePostFragment : Fragment() {
     lateinit var binding: FragmentCreatePostBinding
     private val vm by viewModel<CreatePostViewModel>()
+    private val updateVm by viewModel<UpdatePostViewModel>()
     var imageUri: Uri? = null
     var editData:SinglePostRes? = null
 
@@ -60,25 +59,32 @@ class CreatePostFragment : Fragment() {
                 ResponseStatus.BEFORE -> Timber.d("createpostfragment")
             }
         })
+        updateVm.updatePostResult.observe(viewLifecycleOwner, Observer {
+            when(it){
+                ResponseStatus.SUCCESS -> findNavController().navigate(R.id.action_createPostFragment_to_articleListFragment)
+                ResponseStatus.FAIL -> Toast.makeText(this.requireContext(), "fail, try again",Toast.LENGTH_SHORT).show()
+                ResponseStatus.LOADING ->Toast.makeText(this.requireContext(), "loading",Toast.LENGTH_SHORT).show()
+                ResponseStatus.BEFORE -> Timber.d("createpostfragment")
+            }
+        })
     }
     private fun checkEditOrCreate(){
-        editData = arguments?.getParcelable<SinglePostRes>("editArticle")
+        editData = arguments?.getParcelable("editArticle")
         editData?.let {
             val (_,post) = it
-            val data = post //?.get(0)
-            binding.newPostTitle.setText(data?.title)
-            binding.newPostContent.setText(data?.content)
-            if (data?.image != "null"){
+            binding.newPostTitle.setText(post?.title)
+            binding.newPostContent.setText(post?.content)
+            if (post?.image != "null"){
                 binding.imgHolder.visibility = View.VISIBLE
                 Glide.with(this.requireContext())
-                    .load(imagePrefix + data?.image)
+                    .load(imagePrefix + post?.image)
                     .into(binding.img)
                 binding.removePhoto.setOnClickListener {
-                    // TODO remove photo
+                    // TODO kenny remove photo
                     binding.imgHolder.visibility = View.GONE
                 }
                 binding.addImage.setOnClickListener {
-                    //todo this function need check add or not
+                    //todo kenny this function need check add or not
                     binding.imgHolder.visibility = View.GONE
                 }
             }
@@ -97,8 +103,15 @@ class CreatePostFragment : Fragment() {
                         imageUri
                     )
                 } else {
-                    Timber.d("update")
-                    //todo update
+                    //todo  kai @Part parameters can only be used with multipart encoding. (parameter #2)
+                    editData?.post?.id?.let { it1 ->
+                        updateVm.UpdatePost(
+                            it1,
+                            MultipartBody.Part.createFormData("title", t),
+                            MultipartBody.Part.createFormData("content", c),
+                            imageUri
+                        )
+                    }
                 }
             } else {
                 Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()

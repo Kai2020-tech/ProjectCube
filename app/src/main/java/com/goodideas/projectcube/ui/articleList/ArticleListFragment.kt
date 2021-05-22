@@ -21,6 +21,8 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.data.dto.posts.AllPosts
+import com.goodideas.projectcube.data.dto.vote.VoteState
+import com.goodideas.projectcube.data.dto.vote.VoteType
 import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.databinding.FragmentArticleListBinding
 import com.goodideas.projectcube.ui.Login.StartViewModel
@@ -137,6 +139,12 @@ class ArticleListFragment : Fragment() {
             Timber.d(it.toString())
             view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetail,
                 bundleOf("articleId" to it))
+        }
+        adapter.like = {
+            vm.vote(VoteType.POST,it,VoteState.LIKE)
+        }
+        adapter.disLike = {
+            vm.vote(VoteType.POST,it,VoteState.DISLIKE)
         }
     }
 }

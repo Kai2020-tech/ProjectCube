@@ -16,6 +16,8 @@ import timber.log.Timber
 
 class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
     var click:(Int)->Unit = {}
+    var like:(Int)->Unit = {}
+    var disLike:(Int) -> Unit = {}
     
     class ArticleViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
         val titleView: TextView = itemView.findViewById<TextView>(R.id.article_title)
@@ -53,7 +55,9 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
             it.titleView.text = title
             it.itemView.setOnClickListener { click(articleId) }
             it.like.text = like.toString()
+            it.like.setOnClickListener { like(articleId) }
             it.dislike.text = dislike.toString()
+            it.dislike.setOnClickListener { disLike(articleId) }
             it.commentCount.text = commentCount.toString()
             if (image.isNotBlank() && image != "null"){
                 Glide.with(context)

@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.Register
+package com.goodideas.projectcube.ui.Login.Register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,7 +16,6 @@ import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.databinding.FragmentRegisterBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.lang.Exception
 
 
 class RegisterFragment : Fragment() {

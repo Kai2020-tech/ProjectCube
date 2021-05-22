@@ -1,5 +1,6 @@
 package com.goodideas.projectcube.ui.SearchPost
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.os.RecoverySystem
 import androidx.fragment.app.Fragment
@@ -46,11 +47,14 @@ class SearchFragment : Fragment() {
     }
     private fun initObserver(){
         viewModel.searchResult.observe(viewLifecycleOwner, Observer {
-            if(it.size == 0 ) Toast.makeText(this.requireContext(), "no result found", Toast.LENGTH_SHORT).show()
+            if(it.size == 0 || it.isNullOrEmpty()) Toast.makeText(this.requireContext(), "no result found", Toast.LENGTH_SHORT).show()
             sadapter.submitList(it)
         })
     }
     private fun initUi(){
+        binding.articleSearchS.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+
+
         val searchKeyWord = arguments?.getString("keyword")
         if (searchKeyWord.isNullOrBlank()) Toast.makeText(this.requireContext(),"please type word",Toast.LENGTH_SHORT).show()
         else viewModel.searchPost(searchKeyWord)
@@ -73,8 +77,12 @@ class SearchFragment : Fragment() {
             AlertDialog.Builder(this.requireContext())
                 .setTitle("search for ...")
                 .setPositiveButton("search"){_,which ->
-                    viewModel.searchPost(query.text.toString())
-                    hideKeyboard(it)
+                    if(query.text.isNullOrBlank()){
+                        Toast.makeText(this.requireContext(),"type something",Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.searchPost(query.text.toString())
+                        hideKeyboard(it)
+                    }
                 }
                 .setView(dialogView)
                 .show()

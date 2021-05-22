@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -79,20 +80,33 @@ class CreatePostFragment : Fragment() {
         editData?.let {
             val (_,post) = it
             binding.newPostTitle.setText(post?.title)
+
+            // add follow for test
+            initContentTrack(binding.newPostContent,0)
+
             binding.newPostContent.setText(post?.content)
-            if (post?.image != "null"){
-                binding.imgHolder.visibility = View.VISIBLE
+
+            post?.image?.let { s->
+                addView(s.toUri())
+                Timber.d(imagePrefix + post.image)
+                Timber.d(vm.contentList[1].first.toString())
                 Glide.with(this.requireContext())
-                    .load(imagePrefix + post?.image)
-                    .into(binding.img)
-                binding.removePhoto.setOnClickListener {
-                    // TODO kenny remove photo from server, no need now
-                    binding.imgHolder.visibility = View.GONE
-                }
-                binding.addImage.setOnClickListener {
-                    binding.imgHolder.visibility = View.GONE
-                }
+                    .load(imagePrefix + post.image)
+                    .into(view?.findViewById(vm.contentList[1].first) as ImageView)
             }
+//            if (post?.image != "null"){
+//                binding.imgHolder.visibility = View.VISIBLE
+//                Glide.with(this.requireContext())
+//                    .load(imagePrefix + post?.image)
+//                    .into(binding.img)
+//                binding.removePhoto.setOnClickListener {
+//                    // TODO kenny remove photo from server, no need now
+//                    binding.imgHolder.visibility = View.GONE
+//                }
+//                binding.addImage.setOnClickListener {
+//                    binding.imgHolder.visibility = View.GONE
+//                }
+//            }
         }
     }
     private fun addView(url: Uri?){

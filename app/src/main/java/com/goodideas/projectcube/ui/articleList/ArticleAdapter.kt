@@ -51,7 +51,6 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val (avatar,commentCount,content,created,dislike,articleId,image,like,name,title,update,authorId) = getItem(position)
-        Timber.d(getItem(0).toString())
         holder.let {
             it.contentView.text = content
 //            it.date.text = created
@@ -63,11 +62,13 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
             it.dislike.setOnClickListener { disLike(articleId) }
             it.commentCount.text = commentCount.toString()
             if (image.isNotBlank() && image != "null"){
+                it.previewImage.setWillNotDraw(false)
                 Glide.with(context)
                     .load("http://api.rrrui.site/storage/$image")
                     .error(R.drawable.ic_baseline_error_outline_24)
-                    .centerCrop()
                     .into(it.previewImage)
+            } else {
+                it.previewImage.setWillNotDraw(true)
             }
             Timber.d(image)
             it.custom.setLikeAndDislike(like,dislike)

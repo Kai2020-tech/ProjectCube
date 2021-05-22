@@ -78,13 +78,14 @@ class ArticleDetail : Fragment() {
 
             if (it.comments?.isNullOrEmpty() == true)Toast.makeText(this.requireContext(),"No comment",Toast.LENGTH_SHORT).show()
             sadapter.submitList(it.comments)
+            Timber.d(it.comments.toString())
         })
 
     }
     private fun initUI(){
         binding.commentEdit.paint.flags = Paint.UNDERLINE_TEXT_FLAG
 
-        sadapter = CommentAdapter()
+        sadapter = CommentAdapter(this.requireContext())
         sadapter.longClick = { id,content,commentAuthorId ->
 
             val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)

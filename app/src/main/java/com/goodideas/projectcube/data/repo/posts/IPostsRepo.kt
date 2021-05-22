@@ -34,7 +34,7 @@ interface IPostsRepo {
 
     suspend fun deletePost(id: Int): Response<DeletePostRes>
 
-    suspend fun searchPost(keyword: String): Response<SearchPostRes>
+    suspend fun searchPost(keyword: String): Response<AllPosts>
 
 
     //comments---------------------------------------

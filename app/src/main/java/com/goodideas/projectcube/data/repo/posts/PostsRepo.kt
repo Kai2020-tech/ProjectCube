@@ -44,7 +44,7 @@ class PostsRepo(private val source: ApiService) : IPostsRepo {
         return source.retrofit.deletePost(id)
     }
 
-    override suspend fun searchPost(keyword: String): Response<SearchPostRes> {
+    override suspend fun searchPost(keyword: String): Response<AllPosts> {
         return source.retrofit.getSearchedPost(keyword)
     }
 

@@ -52,7 +52,7 @@ interface Api {
     @GET("posts/search/{keyword}")
     suspend fun getSearchedPost(
         @Path("keyword") keyword: String
-    ): Response<SearchPostRes>
+    ): Response<AllPosts>
 
     @POST("posts")
     @Multipart

@@ -65,7 +65,7 @@ class CreatePostFragment : Fragment() {
         editData = arguments?.getParcelable<SinglePostRes>("editArticle")
         editData?.let {
             val (_,post) = it
-            val data = post?.get(0)
+            val data = post //?.get(0)
             binding.newPostTitle.setText(data?.title)
             binding.newPostContent.setText(data?.content)
             if (data?.image != "null"){

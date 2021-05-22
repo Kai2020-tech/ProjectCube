@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.CreatePost
+package com.goodideas.projectcube.ui.profile
 
 import android.app.Application
 import android.content.Context
@@ -9,50 +9,32 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.goodideas.projectcube.Util.ResponseStatus
-import com.goodideas.projectcube.data.dto.comments.CreateCommentReq
-import com.goodideas.projectcube.data.repo.posts.IPostsRepo
-import com.goodideas.projectcube.data.repo.posts.PostsRepo
+import androidx.lifecycle.*
+import com.goodideas.projectcube.data.dto.profile.ProfileRes
+import com.goodideas.projectcube.data.dto.profile.UpdateProfileReq
+import com.goodideas.projectcube.data.repo.profile.IProfileRepo
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
-import java.io.File
 
-class CreatePostViewModel(private val repo: IPostsRepo, application: Application) :
+class ProfileViewModel(val repo: IProfileRepo, application: Application) :
     AndroidViewModel(application) {
 
     val app = application
 
-    val createPostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
+    private val _userProfile: MutableLiveData<ProfileRes> = MutableLiveData<ProfileRes>()
+    val userProfile: LiveData<ProfileRes>
+        get() = _userProfile
 
-    fun createPost(
-        t: MultipartBody.Part,
-        c: MultipartBody.Part,
-        imageUri: Uri?
-    ) {
-        viewModelScope.launch {
-            val response = repo.createPost(t, c, compressImage(imageUri))
-            if (response.isSuccessful) {
-                createPostResult.value = ResponseStatus.SUCCESS
-            } else {
-                createPostResult.value = ResponseStatus.FAIL
-            }
-        }
-    }
 
-    fun createComment(postId: Int, content: String) {
+    fun getUserProfile(userId: Int) {
         viewModelScope.launch {
-            val response = repo.createComment(postId, CreateCommentReq(content))
+            val response = repo.getUserProfile(userId)
             if (response.isSuccessful) {
+                _userProfile.value = response.body()
                 // TODO: 2021/5/21
             } else {
                 // TODO: 2021/5/21
@@ -60,9 +42,10 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
         }
     }
 
-    fun updateComment(commentId: Int, content: String) {
+    fun updateProfile(name: MultipartBody.Part?, image: Uri?) {
         viewModelScope.launch {
-            val response = repo.updateComment(commentId, CreateCommentReq(content))
+            val imageBody = compressImage(image)
+            val response = repo.updateProfile(UpdateProfileReq(name, imageBody))
             if (response.isSuccessful) {
                 // TODO: 2021/5/21
             } else {
@@ -70,18 +53,6 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
             }
         }
     }
-
-    fun deleteComment(commentId: Int) {
-        viewModelScope.launch {
-            val response = repo.deleteComment(commentId)
-            if (response.isSuccessful) {
-                // TODO: 2021/5/21
-            } else {
-                // TODO: 2021/5/21
-            }
-        }
-    }
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun compressImage(imageUri: Uri?): MultipartBody.Part? {
@@ -128,12 +99,4 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
         matrix.postRotate(degree.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true)
     }
-
-//    private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
-//        val file = File(imageUri?.path ?: "")
-//        return if (file.exists()) {
-//            val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-//            MultipartBody.Part.createFormData("image", file.name, requestFile)
-//        } else null
-//    }
 }

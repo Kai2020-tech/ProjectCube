@@ -6,8 +6,13 @@ import com.goodideas.projectcube.data.dto.auth.LogoutRes
 import com.goodideas.projectcube.data.dto.comments.*
 import com.goodideas.projectcube.data.dto.posts.*
 import com.goodideas.projectcube.data.dto.profile.ProfileRes
+import com.goodideas.projectcube.data.dto.profile.UpdateProfileReq
+import com.goodideas.projectcube.data.dto.profile.UpdateProfileRes
 import com.goodideas.projectcube.data.dto.register.RegisterReq
 import com.goodideas.projectcube.data.dto.register.RegisterRes
+import com.goodideas.projectcube.data.dto.vote.VoteRes
+import com.goodideas.projectcube.data.dto.vote.VoteState
+import com.goodideas.projectcube.data.dto.vote.VoteType
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -24,8 +29,15 @@ interface Api {
     @POST("logout")
     suspend fun logout(): Response<LogoutRes>
 
-    @POST("profile")
-    suspend fun getProfile(): Response<ProfileRes>
+    @POST("profile/{userId}")
+    suspend fun getProfile(
+        @Path("userId") id: Int
+    ): Response<ProfileRes>
+
+    @PATCH("profile")
+    suspend fun updateProfile(
+        @Body req: UpdateProfileReq
+    ): Response<UpdateProfileRes>
 
 
     //posts ------------------------------
@@ -86,4 +98,13 @@ interface Api {
     suspend fun deleteComment(
         @Path("commentId") id: Int
     ): Response<DeleteCommentRes>
+
+
+    //vote ------------------------------
+    @POST("votes/{voteType}/{id}/{voteState}")
+    suspend fun vote(
+        @Path("voteType") voteType: String,
+        @Path("id") id: Int,
+        @Path("voteState") state: String
+    ): Response<VoteRes>
 }

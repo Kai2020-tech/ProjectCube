@@ -85,6 +85,25 @@ class ArticleDetail : Fragment() {
         binding.commentEdit.paint.flags = Paint.UNDERLINE_TEXT_FLAG
 
         sadapter = CommentAdapter()
+        sadapter.longClick = { id,content,commentAuthorId ->
+
+            val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)
+            val query = dialogView.findViewById<EditText>(R.id.comment_write_dialog_edittext)
+            if (commentAuthorId == userId){
+                query.setText(content)
+                AlertDialog.Builder(this.requireContext())
+                    .setTitle("Edit Comment")
+                    .setPositiveButton("Sent"){_,_ ->
+                        if(query.text.isNullOrBlank())Toast.makeText(this.requireContext(),"type content",Toast.LENGTH_SHORT).show()
+                        else id?.let { vm.updateComment(it,query.text.toString()) }
+                    }
+                    .setNegativeButton("delete"){_,_ ->
+                        id?.let { vm.deleteComment(it) }
+                    }
+                    .setView(dialogView)
+                    .show()
+            }
+        }
         rv = binding.articleComment
         rv.apply {
             layoutManager =LinearLayoutManager(this@ArticleDetail.requireContext())
@@ -131,7 +150,7 @@ class ArticleDetail : Fragment() {
                             "invalid request, check comment content or article status",
                         Toast.LENGTH_SHORT).show()
                     } else {
-                        vm.createCommit(articleId!!, query.text.toString())
+                        vm.createComment(articleId!!, query.text.toString())
                         //todo kai if success vm.getSinglePost(articleId!!)
                         hideKeyboard(it)
                     }

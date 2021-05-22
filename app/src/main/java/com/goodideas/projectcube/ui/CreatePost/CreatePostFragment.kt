@@ -5,11 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -21,9 +28,9 @@ import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
 import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.http.Url
 import timber.log.Timber
 
-//圖片ui之後會改位置
 class CreatePostFragment : Fragment() {
     lateinit var binding: FragmentCreatePostBinding
     private val vm by viewModel<CreatePostViewModel>()
@@ -79,42 +86,78 @@ class CreatePostFragment : Fragment() {
                     .load(imagePrefix + post?.image)
                     .into(binding.img)
                 binding.removePhoto.setOnClickListener {
-                    // TODO kenny remove photo
+                    // TODO kenny remove photo from server, no need now
                     binding.imgHolder.visibility = View.GONE
                 }
                 binding.addImage.setOnClickListener {
-                    //todo kenny this function need check add or not
                     binding.imgHolder.visibility = View.GONE
                 }
             }
         }
     }
+    private fun addView(url: Uri?){
+        val imgView = ImageView(this.requireContext())
+        imgView.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+        )
+        val createId = View.generateViewId()
+        imgView.id = createId
+        imgView.setImageURI(url)
+        binding.scrollLayout.addView(imgView)
+        vm.contentList.add(Pair(createId,url.toString()))
+
+        val edView = EditText(this.requireContext())
+        edView.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+        )
+        val secondId = View.generateViewId()
+        edView.id = secondId
+        edView.setBackgroundResource(android.R.color.transparent)
+        vm.contentList.add(Pair(secondId,""))
+        vm.contentList.forEachIndexed { index, pair ->
+            if (pair.first == secondId) initContentTrack(edView,index)
+        }
+
+        binding.scrollLayout.addView(edView)
+    }
 
     private fun initUI() {
+        vm.contentList.add(Pair(binding.newPostContent.id,""))
+        initContentTrack(binding.newPostContent,0)
+
         binding.tmpSent.setOnClickListener {
-            val t = binding.newPostTitle.text.toString()
-            val c = binding.newPostContent.text.toString()
-            if (!t.isBlank() && !c.isBlank()) {
-                if (editData == null){
-                    vm.createPost(
-                        MultipartBody.Part.createFormData("title", t),
-                        MultipartBody.Part.createFormData("content", c),
-                        imageUri
-                    )
-                } else {
-                    //todo  kai @Part parameters can only be used with multipart encoding. (parameter #2)
-                    editData?.post?.id?.let { it1 ->
-                        updateVm.UpdatePost(
-                            it1,
-                            MultipartBody.Part.createFormData("title", t),
-                            MultipartBody.Part.createFormData("content", c),
-                            imageUri
-                        )
-                    }
+//            val t = binding.newPostTitle.text.toString()
+//            val c = binding.newPostContent.text.toString()
+//            if (!t.isBlank() && !c.isBlank()) {
+//                if (editData == null){
+//                    vm.createPost(
+//                        MultipartBody.Part.createFormData("title", t),
+//                        MultipartBody.Part.createFormData("content", c),
+//                        imageUri
+//                    )
+//                } else {
+//                    //todo kai @Part parameters can only be used with multipart encoding. (parameter #2)
+//                    editData?.post?.id?.let { it1 ->
+//                        updateVm.UpdatePost(
+//                            it1,
+//                            MultipartBody.Part.createFormData("title", t),
+//                            MultipartBody.Part.createFormData("content", c),
+//                            imageUri
+//                        )
+//                    }
+//                }
+//            } else {
+//                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
+//            }
+            Timber.d("before")
+            vm.contentList.forEachIndexed { index, pair ->
+                Timber.d("each")
+                if (pair.second.isBlank())  {
+                    vm.contentList.removeAt(index)
                 }
-            } else {
-                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
             }
+            Timber.d(vm.contentList.toString())
+            //todo kenny BUG FOUND, if click sent but stay in this page, since we remove pair form list, ui wouldn't update with data
         }
 
         binding.addImage.setOnClickListener {
@@ -129,10 +172,28 @@ class CreatePostFragment : Fragment() {
             imageUri = data?.data
             binding.img.setImageURI(imageUri)
             Timber.d(imageUri.toString())
+            binding.addImage.isClickable = false
             binding.imgHolder.visibility = View.VISIBLE
+            binding.insertPhoto.setOnClickListener {
+                addView(imageUri)
+                binding.imgHolder.visibility = View.GONE
+                binding.addImage.isClickable = true
+            }
         }
     }
 
+    private fun initContentTrack(e:EditText, i:Int){
+        e.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                vm.contentList[i]= Pair(binding.newPostContent.id ,s.toString())
+                Timber.d(s.toString())
+            }
+
+        })
+    }
     companion object {
         private const val pickImage = 100
     }

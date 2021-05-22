@@ -13,6 +13,7 @@ import com.goodideas.projectcube.data.dto.posts.Comment
 import com.goodideas.projectcube.ui.articleList.ArticleAdapter
 
 class CommentAdapter:ListAdapter<Comment,CommentAdapter.CommentViewHolder>(Diff()) {
+    var longClick:(Int?,String?,Int?) -> Unit = {_,_,_ ->}
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val comment:TextView = itemView.findViewById(R.id.comment_content)
     }
@@ -24,9 +25,13 @@ class CommentAdapter:ListAdapter<Comment,CommentAdapter.CommentViewHolder>(Diff(
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        val (content,_,commentId,parentCommentId,articleId,_,commentAuthorId) = getItem(position)
+        val (avatar,content,_,dislike,commentId,like,name,articleId,postId,_,commentAuthorId) = getItem(position)
         holder.apply {
             comment.text = content
+            itemView.setOnLongClickListener {
+                longClick(commentId,content,commentAuthorId)
+                return@setOnLongClickListener true
+            }
         }
     }
 

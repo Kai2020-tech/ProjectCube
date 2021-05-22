@@ -34,6 +34,8 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
 
     val createPostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 
+    val contentList = mutableListOf<Pair<Int,String>>()
+
     fun createPost(
         t: MultipartBody.Part,
         c: MultipartBody.Part,
@@ -45,39 +47,6 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
                 createPostResult.value = ResponseStatus.SUCCESS
             } else {
                 createPostResult.value = ResponseStatus.FAIL
-            }
-        }
-    }
-
-    fun createComment(postId: Int, content: String) {
-        viewModelScope.launch {
-            val response = repo.createComment(postId, CreateCommentReq(content))
-            if (response.isSuccessful) {
-                // TODO: 2021/5/21
-            } else {
-                // TODO: 2021/5/21
-            }
-        }
-    }
-
-    fun updateComment(commentId: Int, content: String) {
-        viewModelScope.launch {
-            val response = repo.updateComment(commentId, CreateCommentReq(content))
-            if (response.isSuccessful) {
-                // TODO: 2021/5/21
-            } else {
-                // TODO: 2021/5/21
-            }
-        }
-    }
-
-    fun deleteComment(commentId: Int) {
-        viewModelScope.launch {
-            val response = repo.deleteComment(commentId)
-            if (response.isSuccessful) {
-                // TODO: 2021/5/21
-            } else {
-                // TODO: 2021/5/21
             }
         }
     }

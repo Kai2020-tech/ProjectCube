@@ -29,9 +29,36 @@ class ArticleDetailViewModel(private val repo: IPostsRepo) : ViewModel() {
         }
     }
 
-    fun createCommit(postId: Int, s:String){
+    fun createComment(postId: Int, content: String) {
         viewModelScope.launch {
-            repo.createComment(postId, CreateCommentReq(s))
+            val response = repo.createComment(postId, CreateCommentReq(content))
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
+        }
+    }
+
+    fun updateComment(commentId: Int, content: String) {
+        viewModelScope.launch {
+            val response = repo.updateComment(commentId, CreateCommentReq(content))
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
+        }
+    }
+
+    fun deleteComment(commentId: Int) {
+        viewModelScope.launch {
+            val response = repo.deleteComment(commentId)
+            if (response.isSuccessful) {
+                // TODO: 2021/5/21
+            } else {
+                // TODO: 2021/5/21
+            }
         }
     }
 

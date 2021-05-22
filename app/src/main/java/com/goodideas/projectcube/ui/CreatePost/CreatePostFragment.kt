@@ -38,7 +38,6 @@ class CreatePostFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_create_post, container, false
         )
-//        this.requireActivity().actionBar?.hide()
 
         return binding.root
     }

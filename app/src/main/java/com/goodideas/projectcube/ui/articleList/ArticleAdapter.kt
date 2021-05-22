@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.data.dto.posts.AllPostsItem
+import com.goodideas.projectcube.ui.customView.LikeDislikeCompare
 import timber.log.Timber
 
 class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdapter.ArticleViewHolder>(DiffCompare()) {
@@ -27,6 +28,8 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
         val dislike = itemView.findViewById<TextView>(R.id.dislike_number)
         val previewImage: ImageView = itemView.findViewById(R.id.preview_image)
         val commentCount:TextView = itemView.findViewById(R.id.comment_count)
+
+        val custom:LikeDislikeCompare = itemView.findViewById(R.id.count)
     }
 
     class DiffCompare: ItemCallback<AllPostsItem>(){
@@ -63,9 +66,11 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
                 Glide.with(context)
                     .load("http://api.rrrui.site/storage/$image")
                     .error(R.drawable.ic_baseline_error_outline_24)
+                    .centerCrop()
                     .into(it.previewImage)
             }
             Timber.d(image)
+            it.custom.setLikeAndDislike(like,dislike)
         }
     }
 }

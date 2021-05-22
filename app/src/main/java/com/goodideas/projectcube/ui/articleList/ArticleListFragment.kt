@@ -21,6 +21,7 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.data.dto.posts.AllPosts
+import com.goodideas.projectcube.data.dto.posts.AllPostsItem
 import com.goodideas.projectcube.data.dto.vote.VoteState
 import com.goodideas.projectcube.data.dto.vote.VoteType
 import com.goodideas.projectcube.data.network.token

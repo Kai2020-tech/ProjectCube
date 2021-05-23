@@ -26,7 +26,7 @@ class UpdatePostViewModel(private val repo: IPostsRepo) : ViewModel() {
     }
 
 
-    fun UpdatePost(
+    fun updatePost(
         id: Int,
         t: MultipartBody.Part,
         c: MultipartBody.Part,

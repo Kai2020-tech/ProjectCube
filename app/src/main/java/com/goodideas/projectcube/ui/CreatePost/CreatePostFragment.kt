@@ -15,8 +15,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -29,7 +27,6 @@ import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
 import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.http.Url
 import timber.log.Timber
 
 class CreatePostFragment : Fragment() {
@@ -140,29 +137,29 @@ class CreatePostFragment : Fragment() {
         initContentTrack(binding.newPostContent,0)
 
         binding.tmpSent.setOnClickListener {
-//            val t = binding.newPostTitle.text.toString()
-//            val c = binding.newPostContent.text.toString()
-//            if (!t.isBlank() && !c.isBlank()) {
-//                if (editData == null){
-//                    vm.createPost(
-//                        MultipartBody.Part.createFormData("title", t),
-//                        MultipartBody.Part.createFormData("content", c),
-//                        imageUri
-//                    )
-//                } else {
-//                    //todo kai @Part parameters can only be used with multipart encoding. (parameter #2)
-//                    editData?.post?.id?.let { it1 ->
-//                        updateVm.UpdatePost(
-//                            it1,
-//                            MultipartBody.Part.createFormData("title", t),
-//                            MultipartBody.Part.createFormData("content", c),
-//                            imageUri
-//                        )
-//                    }
-//                }
-//            } else {
-//                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
-//            }
+            val t = binding.newPostTitle.text.toString()
+            val c = binding.newPostContent.text.toString()
+            if (!t.isBlank() && !c.isBlank()) {
+                if (editData == null){
+                    vm.createPost(
+                        MultipartBody.Part.createFormData("title", t),
+                        MultipartBody.Part.createFormData("content", c),
+                        imageUri
+                    )
+                } else {
+                    //todo kai @Part parameters can only be used with multipart encoding. (parameter #2)
+                    editData?.post?.id?.let { it1 ->
+                        updateVm.updatePost(
+                            it1,
+                            MultipartBody.Part.createFormData("title", t),
+                            MultipartBody.Part.createFormData("content", c),
+                            imageUri
+                        )
+                    }
+                }
+            } else {
+                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
+            }
             Timber.d("before")
             vm.contentList.forEachIndexed { index, pair ->
                 Timber.d("each")

@@ -29,7 +29,7 @@ interface Api {
     @POST("logout")
     suspend fun logout(): Response<LogoutRes>
 
-    @POST("profile/{userId}")
+    @GET("profile/{userId}")
     suspend fun getProfile(
         @Path("userId") id: Int
     ): Response<ProfileRes>

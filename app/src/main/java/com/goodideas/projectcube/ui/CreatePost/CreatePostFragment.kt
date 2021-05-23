@@ -26,6 +26,7 @@ import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
 import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -146,6 +147,7 @@ class CreatePostFragment : Fragment() {
                         MultipartBody.Part.createFormData("content", c),
                         imageUri
                     )
+                    Timber.d("create post")
                 } else {
                     //todo kai @Part parameters can only be used with multipart encoding. (parameter #2)
                     editData?.post?.id?.let { it1 ->
@@ -156,17 +158,18 @@ class CreatePostFragment : Fragment() {
                             imageUri
                         )
                     }
+                    Timber.d("update post")
                 }
             } else {
                 Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
             }
-            Timber.d("before")
-            vm.contentList.forEachIndexed { index, pair ->
-                Timber.d("each")
-                if (pair.second.isBlank())  {
-                    vm.contentList.removeAt(index)
-                }
-            }
+//            Timber.d("before")
+//            vm.contentList.forEachIndexed { index, pair ->
+//                Timber.d("each")
+//                if (pair.second.isBlank())  {
+//                    vm.contentList.removeAt(index)
+//                }
+//            }
             Timber.d(vm.contentList.toString())
             //todo kenny BUG FOUND, if click sent but stay in this page, since we remove pair form list, ui wouldn't update with data
         }

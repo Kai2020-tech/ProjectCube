@@ -54,20 +54,23 @@ interface Api {
         @Path("keyword") keyword: String
     ): Response<AllPosts>
 
-    @POST("posts")
     @Multipart
+    @POST("posts")
     suspend fun createPost(
         @Part title: MultipartBody.Part?,
         @Part content: MultipartBody.Part?,
         @Part image: MultipartBody.Part?,
     ): Response<CreatePostRes>
 
-    @PATCH("posts/{postId}")
+    @Multipart
+    @POST("posts/{postId}")
     suspend fun updatePost(
         @Path("postId") id: Int,
         @Part title: MultipartBody.Part?,
         @Part content: MultipartBody.Part?,
         @Part image: MultipartBody.Part?,
+        @Part method: MultipartBody.Part? =
+            MultipartBody.Part.createFormData("_method", "PATCH"),
     ): Response<UpdatePostRes>
 
     @DELETE("posts/{postId}")

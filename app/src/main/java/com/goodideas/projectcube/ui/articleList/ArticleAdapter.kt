@@ -61,6 +61,7 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
             it.dislike.text = dislike.toString()
             it.dislike.setOnClickListener { disLike(articleId) }
             it.commentCount.text = commentCount.toString()
+            //中:如果沒圖片位址，不繪製
             if (image.isNotBlank() && image != "null"){
                 it.previewImage.setWillNotDraw(false)
                 Glide.with(context)
@@ -70,7 +71,7 @@ class ArticleAdapter(val context: Context):ListAdapter<AllPostsItem, ArticleAdap
             } else {
                 it.previewImage.setWillNotDraw(true)
             }
-            Timber.d(image)
+            //中:把like和dislike的值傳給customView繪製
             it.custom.setLikeAndDislike(like,dislike)
         }
     }

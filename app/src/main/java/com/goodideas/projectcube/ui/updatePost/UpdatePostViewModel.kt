@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.CreatePost
+package com.goodideas.projectcube.ui.updatePost
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +16,10 @@ import java.io.File
 class UpdatePostViewModel(private val repo: IPostsRepo) : ViewModel() {
 
     val updatePostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
+
+    //中:存view的id跟內容
+    val contentList = mutableListOf<Pair<Int,String>>()
+
 
     private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
         val file = File(imageUri?.path ?: "")

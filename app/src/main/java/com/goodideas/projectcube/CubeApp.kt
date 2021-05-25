@@ -15,7 +15,7 @@ import com.goodideas.projectcube.ui.Login.StartViewModel
 import com.goodideas.projectcube.ui.ReadArticle.ArticleDetailViewModel
 import com.goodideas.projectcube.ui.Login.Register.RegisterViewModel
 import com.goodideas.projectcube.ui.SearchPost.SearchViewModel
-import com.goodideas.projectcube.ui.CreatePost.UpdatePostViewModel
+import com.goodideas.projectcube.ui.updatePost.UpdatePostViewModel
 import com.goodideas.projectcube.ui.profile.ProfileViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

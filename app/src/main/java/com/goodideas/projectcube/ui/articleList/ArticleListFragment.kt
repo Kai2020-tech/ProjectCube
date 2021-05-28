@@ -151,6 +151,7 @@ class ArticleListFragment : Fragment() {
             view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
         }
         binding.oneC.setOnClickListener {
+            findNavController().navigate(R.id.action_articleListFragment_to_richEditor)
         }
 
         binding.articleSearch.setOnClickListener {

@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_articleListFragment_to_CPostVolOne"
             app:destination="@id/CPostVolOne" />
+        <action
+            android:id="@+id/action_articleListFragment_to_richEditor"
+            app:destination="@id/richEditor" />
     </fragment>
     <fragment
         android:id="@+id/articleDetail"
@@ -119,4 +122,8 @@
         android:id="@+id/CPostVolOne"
         android:name="com.goodideas.projectcube.ui.uiTest.CPostVolOne"
         android:label="CPostVolOne" />
+    <fragment
+        android:id="@+id/richEditor"
+        android:name="com.goodideas.projectcube.ui.uiTest.RichEditor"
+        android:label="RichEditor" />
 </navigation>

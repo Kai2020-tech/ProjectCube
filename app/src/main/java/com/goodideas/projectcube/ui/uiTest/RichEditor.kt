@@ -44,11 +44,11 @@ class RichEditor : Fragment() {
     }
     private fun initUI(){
 
-//        binding.addEditorVideo.setOnClickListener {
-//            val video = Intent(Intent.ACTION_PICK)
-//            video.setDataAndType(MediaStore.Video.Media.INTERNAL_CONTENT_URI, "video/*")
-//            startActivityForResult(video, 98)
-//        }
+        binding.addEditorVideo.setOnClickListener {
+            val video = Intent(Intent.ACTION_PICK)
+            video.setDataAndType(MediaStore.Video.Media.INTERNAL_CONTENT_URI, "video/*")
+            startActivityForResult(video, 98)
+        }
         binding.addEditorImage.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK)
             gallery.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*")
@@ -66,6 +66,11 @@ class RichEditor : Fragment() {
                     binding.editor.insertImage(
                         data?.data.toString(),
                         "image"
+                    )
+                }
+                98 -> {
+                    binding.editor.insertVideo(
+                        data?.data.toString()
                     )
                 }
             }

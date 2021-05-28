@@ -38,13 +38,13 @@
             app:layout_constraintEnd_toStartOf="@id/sent"
             android:text="add_image"
             android:id="@+id/add_editor_image" />
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/add_editor_image"-->
-<!--            android:text="add_video"-->
-<!--            android:id="@+id/add_editor_video" />-->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/add_editor_image"
+            android:text="add_video"
+            android:id="@+id/add_editor_video" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

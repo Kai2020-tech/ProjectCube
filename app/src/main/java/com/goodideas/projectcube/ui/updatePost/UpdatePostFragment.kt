@@ -116,20 +116,22 @@ class UpdatePostFragment : Fragment() {
         initContentTrack(binding.edPostContent,0)
 
         binding.edTmpSent.setOnClickListener {
-//            val t = binding.edPostTitle.text.toString()
-//            val c = binding.edPostContent.text.toString()
-//            if (!t.isBlank() && !c.isBlank()) {
-//                editData?.post?.id?.let { it1 ->
-//                    vm.UpdatePost(
-//                        it1,
-//                        MultipartBody.Part.createFormData("title", t),
-//                        MultipartBody.Part.createFormData("content", c),
-//                        imageUri
-//                    )
-//                }
-//            } else {
-//                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
-//            }
+            val t = binding.edPostTitle .text.toString()
+            val c = binding.edPostContent.text.toString()
+            if (!t.isBlank() && !c.isBlank()) {
+                    //todo kai @Part parameters can only be used with multipart encoding. (parameter #2)
+                    editData?.post?.id?.let { it1 ->
+                       vm.updatePost(
+                            it1,
+                            MultipartBody.Part.createFormData("title", t),
+                            MultipartBody.Part.createFormData("content", c),
+                            imageUri
+                        )
+                    }
+                    Timber.d("update post")
+            } else {
+                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
+            }
             Timber.d(vm.contentList.toString())
         }
 

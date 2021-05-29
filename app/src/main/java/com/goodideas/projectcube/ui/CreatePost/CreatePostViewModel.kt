@@ -34,6 +34,7 @@ class CreatePostViewModel(private val repo: IPostsRepo, application: Application
 
     val createPostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 
+    //中:存view的id跟內容
     val contentList = mutableListOf<Pair<Int,String>>()
 
     fun createPost(

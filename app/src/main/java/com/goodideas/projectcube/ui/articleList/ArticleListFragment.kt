@@ -30,6 +30,7 @@ import com.goodideas.projectcube.ui.Login.StartViewModel
 import com.goodideas.projectcube.ui.Login.userId
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import kotlin.math.absoluteValue
 
 
 class ArticleListFragment : Fragment() {
@@ -70,7 +71,7 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun autoLogin(){
-
+        //中:從sharePreference拿值
         email = this.requireActivity().getPreferences(Context.MODE_PRIVATE)
             .getString(LOGIN_EMAIL,null)
         password = this.requireActivity().getPreferences(Context.MODE_PRIVATE)
@@ -78,6 +79,7 @@ class ArticleListFragment : Fragment() {
 
         Timber.d(email)
         Timber.d(password)
+        //中:第一次登入，值為空，存下email和password，之後自動登入
         if (email == null && password == null){
             email = arguments?.getString("em")
             password = arguments?.getString("ps")
@@ -89,14 +91,17 @@ class ArticleListFragment : Fragment() {
                 commit()
             }
         }
-        if (token != "") return
+        //中:已登入或skip login，剩餘不執行
+        if (token != "" || arguments?.getInt("skip") != null) return
 
+        //中:未登入，幫他登入
         if (token == "" && email != null && password != null){
             vmLogin.login(email!!,password!!)
         } else {
             findNavController().navigate(R.id.action_articleListFragment_to_startFragment)
         }
 
+        //中:登入失敗，手動登入
         vmLogin.loginResult.observe(viewLifecycleOwner, Observer {
             if (it == ResponseStatus.FAIL) findNavController().navigate(R.id.action_articleListFragment_to_startFragment)
         })
@@ -109,13 +114,45 @@ class ArticleListFragment : Fragment() {
     }
 
     private fun initUI(){
+        //中:加底線
         binding.articleSearch.paint.flags = Paint.UNDERLINE_TEXT_FLAG
 
+        //中:有效登入
         if (userId != Int.MIN_VALUE && token != "") binding.createNewArticle.visibility = View.VISIBLE
-        binding.createNewArticle.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
+
+        //todo ui測試切換，結束後要還原，記得改xml
+        binding.createNewArticle.setOnClickListener { it ->
+//            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
+            it.animate().rotation(-360f)
+            val tt = arrayOf(binding.oneA, binding.oneB, binding.oneC)
+            var totalDis = -450f
+            tt.forEach { f ->
+                if (f.visibility == View.GONE){
+                    f.visibility = View.VISIBLE
+                    f.animate()
+                        .translationY(totalDis)
+                        .start()
+                } else {
+                    f.animate()
+                        .translationY(0f)
+                        .withEndAction {
+                            f.visibility = View.GONE
+                        }
+                        .start()
+                }
+                totalDis += 150f
+            }
         }
         initAdapter()
+        binding.oneA.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_CPostVolOne)
+        }
+        binding.oneB.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_createPostFragment)
+        }
+        binding.oneC.setOnClickListener {
+            findNavController().navigate(R.id.action_articleListFragment_to_richEditor)
+        }
 
         binding.articleSearch.setOnClickListener {
             val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)
@@ -133,6 +170,7 @@ class ArticleListFragment : Fragment() {
     }
     private fun initAdapter(){
         recyclerView = binding.articleRecyclerList
+        //中:加底線
         recyclerView.addItemDecoration(DividerItemDecoration(this.requireContext(),DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)

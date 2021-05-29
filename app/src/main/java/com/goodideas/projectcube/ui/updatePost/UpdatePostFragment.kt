@@ -1,6 +1,6 @@
-package com.goodideas.projectcube.ui.CreatePost
+package com.goodideas.projectcube.ui.updatePost
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,49 +23,69 @@ import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.data.dto.posts.SinglePostRes
-import com.goodideas.projectcube.databinding.FragmentCreatePostBinding
+import com.goodideas.projectcube.databinding.FragmentUpdatePostBinding
+import com.goodideas.projectcube.ui.CreatePost.CreatePostFragment
 import com.goodideas.projectcube.ui.ReadArticle.imagePrefix
 import okhttp3.MultipartBody
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class CreatePostFragment : Fragment() {
-    lateinit var binding: FragmentCreatePostBinding
-    private val vm by viewModel<CreatePostViewModel>()
+class UpdatePostFragment : Fragment() {
+    lateinit var binding:FragmentUpdatePostBinding
+    private val vm by viewModel<UpdatePostViewModel>()
+
     var imageUri: Uri? = null
-    var editData:SinglePostRes? = null
+    var editData: SinglePostRes? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_create_post, container, false
-        )
-
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_update_post, container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUI()
         initObserver()
+        initUI()
+        checkEditData()
     }
 
     private fun initObserver(){
-        vm.createPostResult.observe(viewLifecycleOwner, Observer {
+        vm.updatePostResult.observe(viewLifecycleOwner, Observer {
             when(it){
-                ResponseStatus.SUCCESS -> findNavController().navigate(R.id.action_createPostFragment_to_articleListFragment)
-                ResponseStatus.FAIL -> Toast.makeText(this.requireContext(), "fail, try again",Toast.LENGTH_SHORT).show()
-                ResponseStatus.LOADING ->Toast.makeText(this.requireContext(), "loading",Toast.LENGTH_SHORT).show()
+                ResponseStatus.SUCCESS -> findNavController().navigate(R.id.action_updatePostFragment_to_articleListFragment)
+                ResponseStatus.FAIL -> Toast.makeText(this.requireContext(), "fail, try again",
+                    Toast.LENGTH_SHORT).show()
+                ResponseStatus.LOADING -> Toast.makeText(this.requireContext(), "loading", Toast.LENGTH_SHORT).show()
                 ResponseStatus.BEFORE -> Timber.d("createpostfragment")
             }
         })
     }
+    //中:拿資料放到ui
+    private fun checkEditData(){
+        editData = arguments?.getParcelable("editArticle")
+        editData?.let {
+            val (_,post) = it
+            binding.edPostTitle.setText(post?.title)
 
+            initContentTrack(binding.edPostContent,0)
+
+            binding.edPostContent.setText(post?.content)
+
+            post?.image?.let { s->
+                addView(s.toUri())
+
+                Glide.with(this.requireContext())
+                    .load(imagePrefix + post.image)
+                    .into(view?.findViewById(vm.contentList[1].first) as ImageView)
+            }
+        }
+    }
+
+    //中:同createPostFragment
     private fun addView(url: Uri?){
-        //中:建立view，設高寬，設id，把view添加到layout裡面
         val imgView = ImageView(this.requireContext())
         imgView.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -73,10 +93,9 @@ class CreatePostFragment : Fragment() {
         val createId = View.generateViewId()
         imgView.id = createId
         imgView.setImageURI(url)
-        binding.scrollLayout.addView(imgView)
+        binding.edScrollLayout.addView(imgView)
         vm.contentList.add(Pair(createId,url.toString()))
 
-        //中:建立view，設高寬，設id，改背景，建立textWatcher,把view添加到layout裡面
         val edView = EditText(this.requireContext())
         edView.layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -89,62 +108,59 @@ class CreatePostFragment : Fragment() {
             if (pair.first == secondId) initContentTrack(edView,index)
         }
 
-        binding.scrollLayout.addView(edView)
+        binding.edScrollLayout.addView(edView)
     }
 
     private fun initUI() {
-        //中:先存資料到vm裡，並建立textwatcher
-        vm.contentList.add(Pair(binding.newPostContent.id,""))
-        initContentTrack(binding.newPostContent,0)
+        vm.contentList.add(Pair(binding.edPostContent.id,""))
+        initContentTrack(binding.edPostContent,0)
 
-        binding.tmpSent.setOnClickListener {
-
-//            val t = binding.newPostTitle.text.toString()
-//            val c = binding.newPostContent.text.toString()
+        binding.edTmpSent.setOnClickListener {
+//            val t = binding.edPostTitle.text.toString()
+//            val c = binding.edPostContent.text.toString()
 //            if (!t.isBlank() && !c.isBlank()) {
-//                if (editData == null){
-//                    vm.createPost(
+//                editData?.post?.id?.let { it1 ->
+//                    vm.UpdatePost(
+//                        it1,
 //                        MultipartBody.Part.createFormData("title", t),
 //                        MultipartBody.Part.createFormData("content", c),
 //                        imageUri
 //                    )
-//                } else {
-//                    Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
 //                }
+//            } else {
+//                Toast.makeText(this.requireContext(), "title and content must not be empty", Toast.LENGTH_SHORT).show()
 //            }
             Timber.d(vm.contentList.toString())
         }
 
-        binding.addImage.setOnClickListener {
+        binding.edAddImage.setOnClickListener {
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == pickImage){
+        if (resultCode == Activity.RESULT_OK && requestCode == pickImage){
             imageUri = data?.data
             binding.img.setImageURI(imageUri)
             Timber.d(imageUri.toString())
-            binding.addImage.isClickable = false
-            binding.imgHolder.visibility = View.VISIBLE
-            binding.insertPhoto.setOnClickListener {
+            binding.edAddImage.isClickable = false
+            binding.edImgHolder.visibility = View.VISIBLE
+            binding.edInsertPhoto.setOnClickListener {
                 addView(imageUri)
-                binding.imgHolder.visibility = View.GONE
-                binding.addImage.isClickable = true
+                binding.edImgHolder.visibility = View.GONE
+                binding.edAddImage.isClickable = true
             }
         }
     }
 
-    //中:當edittext改變，更改vm
     private fun initContentTrack(e:EditText, i:Int){
-        e.addTextChangedListener(object :TextWatcher{
+        e.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                vm.contentList[i]= Pair(binding.newPostContent.id ,s.toString())
+                vm.contentList[i]= Pair(binding.edPostContent.id ,s.toString())
                 Timber.d(s.toString())
             }
 

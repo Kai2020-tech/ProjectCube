@@ -1,4 +1,4 @@
-package com.goodideas.projectcube.ui.CreatePost
+package com.goodideas.projectcube.ui.updatePost
 
 import android.app.Application
 import android.content.Context
@@ -32,13 +32,18 @@ class UpdatePostViewModel(private val repo: IPostsRepo, application: Application
 
     val updatePostResult: MutableLiveData<ResponseStatus> = MutableLiveData(ResponseStatus.BEFORE)
 
-//    private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
-//        val file = File(imageUri?.path ?: "")
-//        return if (file.exists()) {
-//            val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
-//            MultipartBody.Part.createFormData("image", file.name, requestFile)
-//        } else null
-//    }
+
+    //中:存view的id跟內容
+    val contentList = mutableListOf<Pair<Int,String>>()
+
+
+    private fun getPhoto(imageUri: Uri?): MultipartBody.Part? {
+        val file = File(imageUri?.path ?: "")
+        return if (file.exists()) {
+            val requestFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("image", file.name, requestFile)
+        } else null
+    }
 
 
     fun updatePost(

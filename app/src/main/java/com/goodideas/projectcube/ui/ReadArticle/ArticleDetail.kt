@@ -128,7 +128,7 @@ class ArticleDetail : Fragment() {
                     Timber.d("more")
                     when(which){
                         0 -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
-                        1 -> findNavController().navigate(R.id.action_articleDetail_to_createPostFragment, bundleOf("editArticle" to vm.singlePostContent.value))
+                        1 -> findNavController().navigate(R.id.action_articleDetail_to_updatePostFragment, bundleOf("editArticle" to vm.singlePostContent.value))
                         else -> {
                             // todo kai add delete method
                             //if success

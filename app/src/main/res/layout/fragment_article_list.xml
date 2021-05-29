@@ -46,5 +46,42 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:drawableStartCompat="@drawable/ic_baseline_search_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--            todo 中:ui測試切換用，要刪-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintStart_toStartOf="@id/create_new_article"
+            app:layout_constraintTop_toTopOf="@id/create_new_article"
+            app:layout_constraintEnd_toEndOf="@id/create_new_article"
+            app:layout_constraintBottom_toBottomOf="@id/create_new_article"
+            android:id="@+id/one_a"
+            android:visibility="gone"
+            android:backgroundTint="#00ffff"
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintStart_toStartOf="@id/create_new_article"
+            app:layout_constraintTop_toTopOf="@id/create_new_article"
+            app:layout_constraintEnd_toEndOf="@id/create_new_article"
+            app:layout_constraintBottom_toBottomOf="@id/create_new_article"
+            android:id="@+id/one_b"
+            android:layout_margin="28dp"
+            android:visibility="gone"
+            android:backgroundTint="#ff00ff"
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintStart_toStartOf="@id/create_new_article"
+            app:layout_constraintTop_toTopOf="@id/create_new_article"
+            app:layout_constraintEnd_toEndOf="@id/create_new_article"
+            app:layout_constraintBottom_toBottomOf="@id/create_new_article"
+            android:id="@+id/one_c"
+            android:layout_margin="28dp"
+            android:visibility="gone"
+            android:backgroundTint="#ffff00"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

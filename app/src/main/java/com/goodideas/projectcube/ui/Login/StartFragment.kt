@@ -95,7 +95,8 @@ class StartFragment : Fragment() {
             loginConfirm()
         }
         binding.skipButton.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_articleListFragment)
+            findNavController().navigate(R.id.action_startFragment_to_articleListFragment,
+                bundleOf("skip" to -357))
         }
 
         binding.registerButton.setOnClickListener {

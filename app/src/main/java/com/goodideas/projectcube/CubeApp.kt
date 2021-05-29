@@ -49,7 +49,7 @@ class CubeApp : Application() {
             viewModel { StartViewModel(get()) }
             viewModel { ArticleDetailViewModel(get()) }
             viewModel { CreatePostViewModel(get(), get()) }
-            viewModel { UpdatePostViewModel(get()) }
+            viewModel { UpdatePostViewModel(get(),get()) }
             viewModel { SearchViewModel(get()) }
             viewModel { ProfileViewModel(get(), get()) }
         }

@@ -13,15 +13,15 @@ class MRich @JvmOverloads constructor(context: Context, attrs: AttributeSet)
 
     override fun insertImage(url: String?, alt: String?) {
         exec("javascript:RE.prepareInsert();")
-        exec("javascript:RE.insertHTML('<img src=\"https://i.imgur.com/59SBjsi.jpg\" alt=\"$alt\" width=\"100%\"><br><br>');")
+        exec("javascript:RE.insertHTML('<img src=\"$url\" alt=\"$alt\" width=\"100%\"><br><br>');")
     }
 
     override fun insertVideo(url: String?) {
         exec("javascript:RE.prepareInsert();")
-//        "<body contentEditable = true>"
-//        "<div><video src=\"$url\" width=\"100%\" controls=\"\"></video></div></body>"
 
-        exec("javascript:RE.insertHTML('<body contentEditable = true><div><video src=\"$url\" width=\"100%\" controls=\"\"></video></div></body><br><br>');")
+//        exec("javascript:RE.insertHTML('<body contentEditable = true><div><video src=\"$url\" width=\"100%\" controls=\"\"></video></div></body><br><br>');")
+//        exec("javascript:RE.insertHTML('<div><video src=\"$url\" width=\"100%\" controls=\"\"></video></div><br>')")
+        exec("javascript:RE.insertHTML('</p><video src=\"$url\" width=\"100%\" controls=\"\"></video><br><br>')")
     }
     fun addString(s: String?) {
         exec("javascript:RE.prepareInsert();")

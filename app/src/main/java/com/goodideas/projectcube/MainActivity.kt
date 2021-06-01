@@ -22,7 +22,6 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val logoutRepo by inject<LoginRepo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

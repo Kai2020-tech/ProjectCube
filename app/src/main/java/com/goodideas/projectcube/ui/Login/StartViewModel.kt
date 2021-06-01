@@ -70,12 +70,12 @@ class StartViewModel(
 //        }
 //    }
 //
-//    fun logout(){
-//        viewModelScope.launch {
-//            val response = ApiService.retrofit.logout()
-//            Timber.d("${response.body()}")
-//        }
-//    }
+    fun logout(){
+        viewModelScope.launch {
+            val response =repo.logout()
+            Timber.d("${response.body()}")
+        }
+    }
 
 
 

@@ -16,6 +16,7 @@ import com.goodideas.projectcube.R
 import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.Util.onOffNightMode
+import com.goodideas.projectcube.data.network.token
 import com.goodideas.projectcube.databinding.FragmentStartBinding
 import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,6 +37,10 @@ class StartFragment : Fragment() {
             R.layout.fragment_start, container, false
         )
         vm.initLoginResult()
+
+        if(token != ""){
+            vm.logout()
+        }
 
         return binding.root
     }

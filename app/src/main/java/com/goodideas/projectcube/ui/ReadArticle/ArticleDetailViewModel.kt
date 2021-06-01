@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.data.dto.comments.CreateCommentReq
 import com.goodideas.projectcube.data.dto.posts.SinglePostRes
 import com.goodideas.projectcube.data.dto.vote.VoteState
@@ -17,6 +18,10 @@ class ArticleDetailViewModel(private val repo: IPostsRepo) : ViewModel() {
     private val _singlePostContent = MutableLiveData<SinglePostRes>()
     val singlePostContent: LiveData<SinglePostRes>
         get() = _singlePostContent
+
+    private val _deletePostStatus = MutableLiveData<ResponseStatus>()
+    val deletePostStatus: LiveData<ResponseStatus> = _deletePostStatus
+
 
     fun getSinglePost(postId: Int) {
         viewModelScope.launch {
@@ -62,14 +67,28 @@ class ArticleDetailViewModel(private val repo: IPostsRepo) : ViewModel() {
         }
     }
 
-    fun vote(voteType: VoteType,id:Int,voteState: VoteState){
+    fun vote(voteType: VoteType, id: Int, voteState: VoteState) {
         viewModelScope.launch {
             VoteType.values()
-            val response = repo.vote(voteType,id,voteState)
+            val response = repo.vote(voteType, id, voteState)
             if (response.isSuccessful) {
                 // TODO: 2021/5/21
-            }else{
+            } else {
                 // TODO: 2021/5/21
+            }
+        }
+    }
+
+    fun deletePost(postId: Int) {
+        _deletePostStatus.value = ResponseStatus.BEFORE
+        viewModelScope.launch {
+            val response = repo.deletePost(postId)
+            _deletePostStatus.value = ResponseStatus.LOADING
+            if (response.isSuccessful) {
+                _deletePostStatus.value = ResponseStatus.SUCCESS
+                Timber.d("delete ok")
+            } else {
+                _deletePostStatus.value = ResponseStatus.FAIL
             }
         }
     }

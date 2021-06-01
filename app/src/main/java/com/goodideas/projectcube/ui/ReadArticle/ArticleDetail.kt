@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.goodideas.projectcube.R
+import com.goodideas.projectcube.Util.ResponseStatus
 import com.goodideas.projectcube.Util.hideKeyboard
 import com.goodideas.projectcube.databinding.FragmentArticleDetailBinding
 import com.goodideas.projectcube.ui.Login.userId
@@ -35,10 +36,10 @@ import timber.log.Timber
 const val imagePrefix = "http://api.rrrui.site/storage/"
 
 class ArticleDetail : Fragment() {
-    lateinit var binding:FragmentArticleDetailBinding
+    lateinit var binding: FragmentArticleDetailBinding
     lateinit var sadapter: CommentAdapter
-    lateinit var rv:RecyclerView
-    private var articleId:Int? = null
+    lateinit var rv: RecyclerView
+    private var articleId: Int? = null
 
     private val vm by viewModel<ArticleDetailViewModel>()
 
@@ -46,15 +47,20 @@ class ArticleDetail : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_article_detail, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_article_detail, container, false
+        )
 
         articleId = arguments?.getInt("articleId") ?: Int.MIN_VALUE
         Timber.d(articleId.toString())
-        if (articleId == Int.MIN_VALUE){
-            Toast.makeText(this.requireContext(), "article mismatch, please try again",Toast.LENGTH_SHORT).show()
-        }
-        else vm.getSinglePost(articleId!!)
+        if (articleId == Int.MIN_VALUE) {
+            Toast.makeText(
+                this.requireContext(),
+                "article mismatch, please try again",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else vm.getSinglePost(articleId!!)
         return binding.root
     }
 
@@ -64,11 +70,12 @@ class ArticleDetail : Fragment() {
         initObserver()
 
     }
-    private fun initObserver(){
+
+    private fun initObserver() {
         vm.singlePostContent.observe(viewLifecycleOwner, Observer {
             binding.title.text = it.post?.title
             binding.content.text = it.post?.content
-            if (it.post?.image != "null"){
+            if (it.post?.image != "null") {
                 val image = imagePrefix + it.post?.image
                 Glide.with(this.requireActivity())
                     .load(image)
@@ -76,29 +83,39 @@ class ArticleDetail : Fragment() {
                     .into(binding.articleFirstImage)
             }
 
-            if (it.comments?.isNullOrEmpty() == true)Toast.makeText(this.requireContext(),"No comment",Toast.LENGTH_SHORT).show()
+            if (it.comments?.isNullOrEmpty() == true) Toast.makeText(
+                this.requireContext(),
+                "No comment",
+                Toast.LENGTH_SHORT
+            ).show()
             sadapter.submitList(it.comments)
             Timber.d(it.comments.toString())
         })
 
     }
-    private fun initUI(){
+
+    private fun initUI() {
         binding.commentEdit.paint.flags = Paint.UNDERLINE_TEXT_FLAG
 
         sadapter = CommentAdapter(this.requireContext())
-        sadapter.longClick = { id,content,commentAuthorId ->
+        sadapter.longClick = { id, content, commentAuthorId ->
 
-            val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)
+            val dialogView =
+                this.requireActivity().layoutInflater.inflate(R.layout.comment_layout, null)
             val query = dialogView.findViewById<EditText>(R.id.comment_write_dialog_edittext)
-            if (commentAuthorId == userId){
+            if (commentAuthorId == userId) {
                 query.setText(content)
                 AlertDialog.Builder(this.requireContext())
                     .setTitle("Edit Comment")
-                    .setPositiveButton("Sent"){_,_ ->
-                        if(query.text.isNullOrBlank())Toast.makeText(this.requireContext(),"type content",Toast.LENGTH_SHORT).show()
-                        else id?.let { vm.updateComment(it,query.text.toString()) }
+                    .setPositiveButton("Sent") { _, _ ->
+                        if (query.text.isNullOrBlank()) Toast.makeText(
+                            this.requireContext(),
+                            "type content",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        else id?.let { vm.updateComment(it, query.text.toString()) }
                     }
-                    .setNegativeButton("delete"){_,_ ->
+                    .setNegativeButton("delete") { _, _ ->
                         id?.let { vm.deleteComment(it) }
                     }
                     .setView(dialogView)
@@ -107,33 +124,47 @@ class ArticleDetail : Fragment() {
         }
         rv = binding.articleComment
         rv.apply {
-            layoutManager =LinearLayoutManager(this@ArticleDetail.requireContext())
+            layoutManager = LinearLayoutManager(this@ArticleDetail.requireContext())
             adapter = sadapter
             addItemDecoration(
-                DividerItemDecoration(this@ArticleDetail.requireContext(),
-                    DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(
+                    this@ArticleDetail.requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
             )
         }
 
+        vm.deletePostStatus.observe(viewLifecycleOwner, Observer {
+            if (it == ResponseStatus.SUCCESS) {
+                findNavController().navigate(R.id.action_articleDetail_to_articleListFragment)
+            }
+        })
+
         binding.more.setOnClickListener {
             Timber.d("more")
-            val authorArticle = arrayOf("report","edit", "delete")
+            val authorArticle = arrayOf("report", "edit", "delete")
             val notAuthorArticle = arrayOf("report")
 
             MaterialAlertDialogBuilder(this.requireContext())
                 .setItems(
-                    if(vm.singlePostContent.value?.post?.userId == userId) authorArticle
+                    if (vm.singlePostContent.value?.post?.userId == userId) authorArticle
                     else notAuthorArticle
                 ) { dialog, which ->
                     Timber.d("more")
-                    when(which){
-                        0 -> Toast.makeText(this.requireContext(),"report $which", Toast.LENGTH_SHORT).show()
-                        1 -> findNavController().navigate(R.id.action_articleDetail_to_updatePostFragment, bundleOf("editArticle" to vm.singlePostContent.value))
+                    when (which) {
+                        0 -> Toast.makeText(
+                            this.requireContext(),
+                            "report $which",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        1 -> findNavController().navigate(
+                            R.id.action_articleDetail_to_updatePostFragment,
+                            bundleOf("editArticle" to vm.singlePostContent.value)
+                        )
                         else -> {
-                            // todo kai add delete method
-                            //if success
-                            findNavController().navigate(R.id.action_articleDetail_to_articleListFragment)
-                            Timber.d("delete")
+                            articleId?.let {
+                                vm.deletePost(it)
+                            }
                         }
                     }
                 }
@@ -141,15 +172,18 @@ class ArticleDetail : Fragment() {
         }
 
         binding.commentEdit.setOnClickListener {
-            val dialogView = this.requireActivity().layoutInflater.inflate(R.layout.comment_layout,null)
+            val dialogView =
+                this.requireActivity().layoutInflater.inflate(R.layout.comment_layout, null)
             val query = dialogView.findViewById<EditText>(R.id.comment_write_dialog_edittext)
             AlertDialog.Builder(this.requireContext())
                 .setTitle("comment")
-                .setPositiveButton("sent"){ _,_->
-                    if (articleId == Int.MIN_VALUE || query.text.isNullOrBlank()){
-                        Toast.makeText(this.requireContext(),
+                .setPositiveButton("sent") { _, _ ->
+                    if (articleId == Int.MIN_VALUE || query.text.isNullOrBlank()) {
+                        Toast.makeText(
+                            this.requireContext(),
                             "invalid request, check comment content or article status",
-                        Toast.LENGTH_SHORT).show()
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         vm.createComment(articleId!!, query.text.toString())
                         //todo kai if success vm.getSinglePost(articleId!!)

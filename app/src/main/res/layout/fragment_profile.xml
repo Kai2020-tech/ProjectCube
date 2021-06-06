@@ -54,12 +54,15 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/user_avatar"
             android:id="@+id/post_count"/>
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_posts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/post_count"
-            android:id="@+id/user_posts"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_count" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
 </layout>

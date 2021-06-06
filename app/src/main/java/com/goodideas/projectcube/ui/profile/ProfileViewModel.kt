@@ -35,9 +35,9 @@ class ProfileViewModel(val repo: IProfileRepo, application: Application) :
             val response = repo.getUserProfile(userId)
             if (response.isSuccessful) {
                 _userProfile.value = response.body()
-                // TODO: 2021/5/21
+                Timber.d("this is user profile ${userProfile.value}")
             } else {
-                // TODO: 2021/5/21
+                Timber.d("no user profile")
             }
         }
     }
